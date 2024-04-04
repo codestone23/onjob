@@ -2,11 +2,12 @@
 // bai 1 - kiem tra 1 chuoi co nam trong chuoi con lai hay khong
 
 const checkStringExist = (str1,str2) => {
-    return str1.includes(str2) || str2.includes(str1);
+    let arr1 = str1.split(" ");
+    return arr1.includes(str2);
 }
 
-let str2 = "Amela A Beta";
-let str1 = "Beta";
+let str1 = "Amela A Beta";
+let str2 = "B";
 console.log(checkStringExist(str1,str2));
 
 // bai 2 - viet ham rut ngan chuoi
