@@ -1,7 +1,7 @@
 // homework string
 // bai 1 - kiem tra 1 chuoi co nam trong chuoi con lai hay khong
 
-let checkStringExist = (str1,str2) => {
+const checkStringExist = (str1,str2) => {
     return str1.includes(str2);
 }
 
@@ -11,7 +11,7 @@ console.log(checkStringExist(str1,str2));
 
 // bai 2 - viet ham rut ngan chuoi
 
-let shortenString = (str) => {
+const shortenString = (str) => {
     let relString = str.substring(0,8) + '...';
     return relString;
 }
@@ -21,7 +21,7 @@ console.log(`Chuoi thay the la: ${shortenString(str)}`)
 
 // bai 3 - viet ham sao chep chuoi do len 10 lan
 
-let repeatStr = (str) => {
+const repeatStr = (str) => {
     return str.repeat(10);
 }
 
@@ -31,7 +31,7 @@ console.log(repeatStr(str3));
 // bai 4 - viet ham sao chep chuoi len 10 lan cach nhau boi dau gach ngang
 
 
-let repeatString = (str) => {
+const repeatString = (str) => {
     let arr = [];
     for(let i=0; i< 10; i++){
         arr.push(str);
@@ -46,7 +46,7 @@ console.log(repeatString(str4));
 
 // bai 5 - viet ham sao chep chuoi len n lan cach nhau boi dau gach ngang
 
-let repeatStringN = (str,number) => {
+const repeatStringN = (str,number) => {
     let arr = [];
     for(let i=0; i< number; i++){
         arr.push(str);
@@ -62,7 +62,7 @@ console.log(repeatStringN(str5,n));
 
 // bai 6 - viet ham dao nguoc chuoi
 
-let reverseString = (str) =>{
+const reverseString = (str) =>{
     return str.split("").reverse().join("");
 }
 
@@ -71,7 +71,7 @@ console.log(`dao nguoc chuoi cua str6 la: ${reverseString(str6)}`);
 
 // bai 7 - viet ham check doi xung
 
-let checkSymmetry = (str) => {
+const checkSymmetry = (str) => {
     let replaceStr = str.replace(/\s+/g, "").split("").reverse().join("");
     return replaceStr === str.replace(/\s+/g, "");
 }
@@ -81,7 +81,7 @@ console.log(checkSymmetry(str7.toLowerCase()));
 
 // bai 8 - viet ham kiem tra xem chuoi co viet hoa hay khong 
 
-let checkUpperCase = (str) => {
+const checkUpperCase = (str) => {
     return str === str.toUpperCase();
 }
 

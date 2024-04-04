@@ -1,7 +1,7 @@
 // homework number
 // bai 1 - tinh the tich hinh cau
 
-let sphericalVolume = (radius) => {
+const sphericalVolume = (radius) => {
     if(radius > 0){
         return Math.round((4 / 3) * Math.PI * Math.pow(radius,3) * 100) / 100;
     }
@@ -13,7 +13,7 @@ console.log(sphericalVolume(radius));
 
 // bai 2 - Tinh tong tat ca cac so nguyen nam giua chung
 
-let sumNumber = (firstNumber,secondNumber) => {
+const sumNumber = (firstNumber,secondNumber) => {
     if(firstNumber >= secondNumber - 1){
         return 0;
     }
@@ -29,7 +29,7 @@ console.log(sumNumber(firstNumber, secondNumber));
 
 // bai 3 - kiem tra so nguyen to
 
-let isPrime = (number) => {
+const isPrime = (number) => {
     if (number < 2) {
         return false;
     }
@@ -75,7 +75,7 @@ if(n >= 2){
 
 let total = 0;
 
-let totalDivisor = (num) =>{
+const totalDivisor = (num) =>{
     for(let i=1; i<=num/2; i++){
         let rel = num%i;
         if(num%i ==0){
@@ -97,7 +97,7 @@ console.log(`tong uoc so cua ${num} bang ${totalDivisor(num)}`);
 
 // bai 6 - viết hàm sắp xếp lại các chữ số 
 
-let sortNumber = (number6) => {
+const sortNumber = (number6) => {
     let arr = number6.toString().split("");
     arr.sort();
     let result = parseInt(arr.join(""));
