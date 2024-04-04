@@ -56,12 +56,21 @@ const divideForTwo = (arr) => {
 
 const showStringMaxLength = (arr) => {
     let len = arr[0].length;
+    let ans = [arr[0]];
     for(let i=1;i<arr.length;i++) {
-        if(len < arr[i].length) len = arr[i].length;
+        if(len < arr[i].length){
+            len = arr[i].length;
+            ans = [];
+            ans.push(arr[i]);
+        }else if(len === arr[i].length){
+            ans.push(arr[i]);
+        }
     }
 
-    return len;
+    return ans;
 }
+
+console.log(showStringMaxLength(['ab','aaa','ad','c','vcd']));
 
 // bài 7: lấy một phần tử ngẫu nhiên từ mảng
 
