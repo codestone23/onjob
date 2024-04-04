@@ -3,6 +3,7 @@
 
 const checkStringExist = (str1,str2) => {
     let arr1 = str1.split(" ");
+    console.log(arr1);
     return arr1.includes(str2);
 }
 

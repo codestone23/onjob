@@ -76,9 +76,10 @@ if(n >= 2){
 let total = 0;
 
 const totalDivisor = (num) =>{
-    for(let i=1; i<=num/2; i++){
-        let rel = num%i;
-        if(num%i ==0){
+    for(let i=1; i <= Math.sqrt(num); i++){
+        let rel = parseInt(num/i);
+        
+        if(num%i == 0){
             total += i;
         }
         if(num%rel == 0){
@@ -88,10 +89,11 @@ const totalDivisor = (num) =>{
             total -= i;
         }
     }
+    
     return total;
 }
 
-let num = 30;
+let num = 36;
 console.log(`tong uoc so cua ${num} bang ${totalDivisor(num)}`);
 
 

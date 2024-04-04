@@ -29,7 +29,7 @@ const max2Numbers = (arr) => {
 const sortStudents = (arr) => {
     return arr.sort().reverse();
 }
-console.log(sortStudents(["nam","hoa","tuan"]));
+// console.log(sortStudents(["nam","hoa","tuan"]));
 
 // bài 4: tính tổng các số chia hết cho 5 từ 0->100
 
@@ -78,7 +78,7 @@ const randomPosition = (arr) => {
         return 0.5 - Math.random();
     })
 }
-
+// 
 console.log(randomPosition([1,2,3,4,5]));
 
 // bài 9: tìm phần tử chung của 2 mảng
@@ -94,12 +94,27 @@ const similarity = (arr1,arr2) => {
     return arr;
 }
 
-console.log(similarity([1,2,3],[1,2,4]))
+// console.log(similarity([1,2,3],[1,2,4]))
 
 // bài 10: phần từ không xuất hiện ở cả 2 mảng
 
+const symmetricDifference = (arr1,arr2) => {
 
+}
+
+// console.log(symmetricDifference([1,2,3],[1,2,4]));
 
 // bài 11: trả về tập con của một chuỗi
 // bài 12: kiểm tra mảng xem có phải mảng tăng dần hay không
+
+const increaseArray = (arr1) => {
+    let arr = [...arr1];
+    arr1.sort();
+    console.log(arr1);
+    console.log(arr)
+    return arr == arr1;
+}
+
+console.log(increaseArray([1,4,5]));
+
 // bài 13: kiểm tra xem có phải mảng số lẻ giảm dần hay không
