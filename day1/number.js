@@ -14,8 +14,8 @@ console.log(sphericalVolume(radius));
 // bai 2 - Tinh tong tat ca cac so nguyen nam giua chung
 
 const sumNumber = (firstNumber,secondNumber) => {
-    if(firstNumber >= secondNumber - 1){
-        return 0;
+    if(firstNumber > secondNumber){
+        [firstNumber, secondNumber] = [secondNumber, firstNumber]
     }
     let count = 0;
     for(let i = firstNumber + 1; i < secondNumber; i++){
@@ -24,7 +24,7 @@ const sumNumber = (firstNumber,secondNumber) => {
     return count;
 }
 
-let firstNumber = 3, secondNumber = 8;
+let firstNumber = 8, secondNumber = 2;
 console.log(sumNumber(firstNumber, secondNumber));
 
 // bai 3 - kiem tra so nguyen to
