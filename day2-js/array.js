@@ -79,7 +79,7 @@ const randomPosition = (arr) => {
     })
 }
 // 
-console.log(randomPosition([1,2,3,4,5]));
+// console.log(randomPosition([1,2,3,4,5]));
 
 // bài 9: tìm phần tử chung của 2 mảng
 
@@ -99,22 +99,62 @@ const similarity = (arr1,arr2) => {
 // bài 10: phần từ không xuất hiện ở cả 2 mảng
 
 const symmetricDifference = (arr1,arr2) => {
-
+    let arr = [];
+    for(let i = 0; i < arr1.length; i++) {
+        if(!arr2.includes(arr1[i])){
+            arr.push(arr1[i]);
+        }
+    }
+    for(let i = 0; i < arr2.length; i++) {
+        if(!arr1.includes(arr2[i])){
+            arr.push(arr2[i]);
+        }
+    }
+    return arr.sort();
 }
 
-// console.log(symmetricDifference([1,2,3],[1,2,4]));
+// console.log(symmetricDifference([1,2,4],[1,2,3]));
 
 // bài 11: trả về tập con của một chuỗi
+
+const sub_String = (str) => {
+    let arr = [];
+    for(let i = 0; i < str.length;i++){
+        for(let j=i+1;j<=str.length;j++){
+            arr.push(str.substring(i,j));
+        }
+    }
+    return arr;
+}
+
+console.log(sub_String("dog"))
+
+
 // bài 12: kiểm tra mảng xem có phải mảng tăng dần hay không
 
 const increaseArray = (arr1) => {
     let arr = [...arr1];
     arr1.sort();
-    console.log(arr1);
-    console.log(arr)
-    return arr == arr1;
+    return JSON.stringify(arr1) === JSON.stringify(arr);
 }
 
-console.log(increaseArray([1,4,5]));
+// console.log(increaseArray([1,6,4,5]));
 
 // bài 13: kiểm tra xem có phải mảng số lẻ giảm dần hay không
+
+const checkArray = (arr1) => {
+    let arr = [...arr1];
+    arr1.sort().reverse();
+    let check = true;
+    for (let i = 0; i < arr1.length; i++) {
+        if(arr1[i] %2 === 0){
+            check = false;
+            break;
+        }
+    }
+    return JSON.stringify(arr1) === JSON.stringify(arr) && check;
+    
+}
+console.log(checkArray([7,5,3]))
+
+
