@@ -41,14 +41,15 @@ console.log(lengthObject(user))
 // bài 5: viết function lấy ra những user có tuổi lớn lớn 25 và isStatus  = true
 
 const getUsers = (arr) => {
-    let users = [];
+    // let users = [];
 
-    for(let obj of arr){
-        if(parseInt(obj.age) > 25 && obj.isStatus){
-            users.push(obj);
-        }
-    }
-    return users;
+    // for(let obj of arr){
+    //     if(parseInt(obj.age) > 25 && obj.isStatus){
+    //         users.push(obj);
+    //     }
+    // }
+    // return users;
+    return arr.filter((user) => user.isStatus == true && user.age > 25);
 }
 
 console.log(getUsers([{name:"dat", age:26,isStatus:true},{name:"da", age:26, isStatus:false}]))
