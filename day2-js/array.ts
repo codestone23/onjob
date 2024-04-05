@@ -18,13 +18,14 @@ const minNumbers = (arr: number[]) : number => {
 const max2Numbers = (arr: number[]): number | void => {
     if(arr.length >= 2){
         arr.sort();
-        let ans: number = arr[arr.length - 1];
-        for(let i = arr.length - 2; i >= 0; i--){
-            if(arr[i] < ans) {
-                return arr[i];
-            }
-        }
-        return arr[1];
+        let ans: number[] = [...new Set(arr)]
+        // let ans: number = arr[arr.length - 1];
+        // for(let i = arr.length - 2; i >= 0; i--){
+        //     if(arr[i] < ans) {
+        //         return arr[i];
+        //     }
+        // }
+        return ans[1];
     }
 }
 
@@ -49,7 +50,7 @@ const sumNumbers = () : number => {
 
 // bài 5: viết hàm truyền vào 1 mảng, đầu ra là mảng mới với các số là số dư tương ứng khi chia mảng cũ cho 2
 
-const divideForTwo = (arr) => {
+const divideForTwo = (arr : number[]) : number[] => {
     for (let i=0;i<arr.length;i++) {
         arr[i]/=2;
     }
