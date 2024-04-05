@@ -17,12 +17,18 @@ const minNumbers = (arr) => {
 
 const max2Numbers = (arr) => {
     if(arr.length >= 2){
-        arr.sort().reverse();
+        arr.sort();
+        let ans = arr[arr.length - 1];
+        for(let i = arr.length - 2; i >= 0; i--){
+            if(arr[i] < ans) {
+                return arr[i];
+            }
+        }
         return arr[1];
     }
 }
 
-// console.log(max2Numbers([2,1,3,4]))
+console.log(max2Numbers([2,1,3,4,4]))
 
 // bài 3: viết hàm truyền vào một mảng tên học viên, sắp xếp lại bảng này theo chiều ngược của bảng chữ cái 
 
@@ -93,14 +99,15 @@ const randomPosition = (arr) => {
 // bài 9: tìm phần tử chung của 2 mảng
 
 const similarity = (arr1,arr2) => {
-    let arr = [];
-    for(let i = 0; i < arr2.length; i++) {
-        if(arr1.includes(arr2[i])){
-            arr.push(arr2[i]);
-        }
-    }
+    // let arr = [];
+    // for(let i = 0; i < arr2.length; i++) {
+    //     if(arr1.includes(arr2[i])){
+    //         arr.push(arr2[i]);
+    //     }
+    // }
 
-    return arr;
+    // return arr;
+    return arr1.filter((i) => arr2.includes(i));
 }
 
 // console.log(similarity([1,2,3],[1,2,4]))
@@ -108,18 +115,19 @@ const similarity = (arr1,arr2) => {
 // bài 10: phần từ không xuất hiện ở cả 2 mảng
 
 const symmetricDifference = (arr1,arr2) => {
-    let arr = [];
-    for(let i = 0; i < arr1.length; i++) {
-        if(!arr2.includes(arr1[i])){
-            arr.push(arr1[i]);
-        }
-    }
-    for(let i = 0; i < arr2.length; i++) {
-        if(!arr1.includes(arr2[i])){
-            arr.push(arr2[i]);
-        }
-    }
-    return arr.sort();
+    // let arr = [];
+    // for(let i = 0; i < arr1.length; i++) {
+    //     if(!arr2.includes(arr1[i])){
+    //         arr.push(arr1[i]);
+    //     }
+    // }
+    // for(let i = 0; i < arr2.length; i++) {
+    //     if(!arr1.includes(arr2[i])){
+    //         arr.push(arr2[i]);
+    //     }
+    // }
+    // return arr.sort();
+    return [...arr1.filter((i)=> !arr2.includes(i)),...arr2.filter((i)=> !arr1.includes(i))]
 }
 
 // console.log(symmetricDifference([1,2,4],[1,2,3]));
@@ -164,6 +172,6 @@ const checkArray = (arr1) => {
     return JSON.stringify(arr1) === JSON.stringify(arr) && check;
     
 }
-console.log(checkArray([7,5,3]))
+// console.log(checkArray([7,5,3]))
 
 

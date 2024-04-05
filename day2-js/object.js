@@ -48,8 +48,8 @@ const getUsers = (arr) => {
             users.push(obj);
         }
     }
-
     return users;
 }
 
-console.log(getUsers([{name:"dat", age:26,isStatus:true},{name:"da", age:26,isStatus:false}]))
+console.log(getUsers([{name:"dat", age:26,isStatus:true},{name:"da", age:26, isStatus:false}]))
+
