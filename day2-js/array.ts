@@ -1,7 +1,7 @@
 // bài 1: viết hàm tìm ra số nhổ nhất trong các mảng số 
 
-const minNumbers = (arr) => {
-    let min = arr[0];
+const minNumbers = (arr: number[]) : number => {
+    let min: number = arr[0];
     for(let i = 1; i < arr.length; i++) {
         if(min > arr[i]) min = arr[i];
     }
@@ -15,10 +15,10 @@ const minNumbers = (arr) => {
 
 // bài 2: viết hàm tìm ra số lớn thứ nhì trong các mảng số
 
-const max2Numbers = (arr) => {
+const max2Numbers = (arr: number[]): number | void => {
     if(arr.length >= 2){
         arr.sort();
-        let ans = arr[arr.length - 1];
+        let ans: number = arr[arr.length - 1];
         for(let i = arr.length - 2; i >= 0; i--){
             if(arr[i] < ans) {
                 return arr[i];
@@ -32,14 +32,14 @@ console.log(max2Numbers([2,1,3,4,4]))
 
 // bài 3: viết hàm truyền vào một mảng tên học viên, sắp xếp lại bảng này theo chiều ngược của bảng chữ cái 
 
-const sortStudents = (arr) => {
+const sortStudents = (arr: string[]) : string[] => {
     return arr.sort().reverse();
 }
 // console.log(sortStudents(["nam","hoa","tuan"]));
 
 // bài 4: tính tổng các số chia hết cho 5 từ 0->100
 
-const sumNumbers = () => {
+const sumNumbers = () : number => {
     let total = 0;
     for(let i=5; i<=100; i+=5){
         total += i;
@@ -60,9 +60,9 @@ const divideForTwo = (arr) => {
 
 // baì 6: viết hàm lọc ra các phần tủ cho độ dài lớn nhất
 
-const showStringMaxLength = (arr) => {
-    let len = arr[0].length;
-    let ans = [arr[0]];
+const showStringMaxLength = (arr: string[]) : string[] => {
+    let len: number = arr[0].length;
+    let ans: string[] = [arr[0]];
     for(let i=1;i<arr.length;i++) {
         if(len < arr[i].length){
             len = arr[i].length;
@@ -80,7 +80,7 @@ console.log(showStringMaxLength(['ab','aaa','ad','c','vcd']));
 
 // bài 7: lấy một phần tử ngẫu nhiên từ mảng
 
-const sample = (arr) => {
+const sample = (arr: number[]) : number => {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -88,7 +88,7 @@ const sample = (arr) => {
 
 // bài 8: viết chương trình đổi chỗ ngẫu nhiên giữa các phần tử trong mảng
 
-const randomPosition = (arr) => {
+const randomPosition = (arr: number[]) => {
     return arr.sort(function(){
         return 0.5 - Math.random();
     })
@@ -98,7 +98,7 @@ const randomPosition = (arr) => {
 
 // bài 9: tìm phần tử chung của 2 mảng
 
-const similarity = (arr1,arr2) => {
+const similarity = (arr1 : number[],arr2 : number[]) : number[]=> {
     // let arr = [];
     // for(let i = 0; i < arr2.length; i++) {
     //     if(arr1.includes(arr2[i])){
@@ -114,7 +114,7 @@ const similarity = (arr1,arr2) => {
 
 // bài 10: phần từ không xuất hiện ở cả 2 mảng
 
-const symmetricDifference = (arr1,arr2) => {
+const symmetricDifference = (arr1 : number[],arr2: number[]) : number[] => {
     // let arr = [];
     // for(let i = 0; i < arr1.length; i++) {
     //     if(!arr2.includes(arr1[i])){
@@ -134,8 +134,8 @@ const symmetricDifference = (arr1,arr2) => {
 
 // bài 11: trả về tập con của một chuỗi
 
-const sub_String = (str) => {
-    let arr = [];
+const sub_String = (str: string): string[] => {
+    let arr:string[] = [];
     for(let i = 0; i < str.length;i++){
         for(let j=i+1;j<=str.length;j++){
             arr.push(str.substring(i,j));
@@ -149,7 +149,7 @@ console.log(sub_String("dog"))
 
 // bài 12: kiểm tra mảng xem có phải mảng tăng dần hay không
 
-const increaseArray = (arr1) => {
+const increaseArray = (arr1: number[]): boolean => {
     let arr = [...arr1];
     arr1.sort();
     return JSON.stringify(arr1) === JSON.stringify(arr);
@@ -159,10 +159,10 @@ const increaseArray = (arr1) => {
 
 // bài 13: kiểm tra xem có phải mảng số lẻ giảm dần hay không
 
-const checkArray = (arr1) => {
-    let arr = [...arr1];
+const checkArray = (arr1: number[]) : boolean => {
+    let arr: number[] = [...arr1];
     arr1.sort().reverse();
-    let check = true;
+    let check: boolean = true;
     for (let i = 0; i < arr1.length; i++) {
         if(arr1[i] %2 === 0){
             check = false;
