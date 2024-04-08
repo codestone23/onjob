@@ -90,6 +90,7 @@ console.log(getDaysInMonth(4,2024));
 
 // bài 9: viết hàm đếm ngược thời gian đến tết dương lịch
 
+
 const downTime = () : void => {
     let date: Date = new Date(Date.now());
     let nextYear: Date = new Date(date.getFullYear()+1,0,1);
@@ -99,22 +100,31 @@ const downTime = () : void => {
     let minutes: number = Math.floor(timeDiff%(1000 * 60 * 60)/(1000 * 60 ));
     let seconds: number = Math.floor(timeDiff%(1000 * 60) / 1000);
     console.log(`Còn ${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây nữa là đến Tết ${nextYear.getFullYear()}`)
+    if(timeDiff <= 0){
+        clearInterval(countDown);
+    } 
 }
+var countDown = setInterval(downTime,1000);
 
 downTime();
 
 // bài 10: trả về 1 chuỗi biểu bị thời gian sau x giây kể từ thời điểm t
 
-const getTimes = (currentTime: string, afterSeconds: number ): string => {
-    let currentDate: Date = new Date();
-    let arrTime: string[] =  currentTime.split(':');
-    currentDate.setHours(parseInt(arrTime[0]));
-    currentDate.setMinutes(parseInt(arrTime[1]));
-    currentDate.setSeconds(parseInt(arrTime[2]));
-    let afterTime: Date = new Date(currentDate.getTime() + afterSeconds*1000);
-    return afterTime.getHours() + ':' + afterTime.getMinutes() + ':' + afterTime.getSeconds();
+const getTimes = (currentTime: string, afterSeconds: number ): string | void => {
+    if(afterSeconds > 1000 || afterSeconds < 0){
+        return 'not valid after seconds';
+    }else{
+        let currentDate: Date = new Date();
+        let arrTime: string[] =  currentTime.split(':');
+        currentDate.setHours(parseInt(arrTime[0]));
+        currentDate.setMinutes(parseInt(arrTime[1]));
+        currentDate.setSeconds(parseInt(arrTime[2]));
+        let afterTime: Date = new Date(currentDate.getTime() + afterSeconds*1000);
+        return afterTime.getHours() + ':' + afterTime.getMinutes() + ':' + afterTime.getSeconds();
+    }
+    
 } 
-console.log(getTimes("9:20:56",7));
+console.log(getTimes("9:20:56",70000));
 
 // bài 11: viết hàm reset data 
 
