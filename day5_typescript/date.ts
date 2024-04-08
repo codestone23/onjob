@@ -1,8 +1,8 @@
 // bài 1: viết 1 hàm js để lấy ngày hiện tại
 
 const getCurrentDate = (item : string) : string => {
-    let date = new Date(Date.now());
-    let day:string= date.getDay().toString();
+    let date: Date = new Date(Date.now());
+    let day:string= date.getDate().toString();
     if(day.length === 1) day = '0' + day;
     let month: string = (date.getMonth() + 1).toString();
     if(month.length === 1) month = '0' + month;
@@ -18,12 +18,12 @@ const getDaysInMonth = (month: number, year: number) : number => {
     return new Date(year, month, 0).getDate();
 }
 
-console.log(getDaysInMonth(8,2020));
+console.log(getDaysInMonth(4,2024));
 
 // bài 3: kiểm tra xem 1 ngày có phải là ngày cuối tuần hay không
 
 const checkDayInWeek = () : boolean => {
-    let day: number = new Date(Date.now()).getDay();
+    let day: number = new Date().getDay();
     if(day === 0 || day === 6) return true;
     return false;
 }
@@ -33,7 +33,7 @@ console.log(checkDayInWeek());
 // bài 4: trả về số phút theo giờ và phút
 
 const getMinusByHourAndMinus = () : number => {
-    let date: Date = new Date(Date.now());
+    let date: Date = new Date();
     let minus: number = date.getMinutes();
     let hour: number = date.getHours();
     return minus + hour*60;
@@ -44,7 +44,7 @@ console.log(getMinusByHourAndMinus());
 // bài 5: đếm số ngày đã trôi qua từ đầu năm
 
 const getDaysPassedInYear = () : number => {
-    let date: Date = new Date(Date.now());
+    let date: Date = new Date();
     let startDay: number = new Date(date.getFullYear(),0,0).getTime();
     let currentDay: number = date.getTime();
     let timePassed: number = currentDay - startDay;
@@ -77,16 +77,16 @@ console.log(startOfWeek(new Date()));
 
 // bài 8: lấy ngày kết thúc tháng
 
-const endOfWeek = (dt: Date) : number => {
-    let currentDate: Date = new Date(dt);
-    let month: number = dt.getMonth();
-    let currentMonth: number = new Date(currentDate.getFullYear(),month,1).getTime();
-    let nextMonth: number = new Date(currentDate.getFullYear(),month+1,1).getTime();
-    let dayEndMonth: number = Math.floor((nextMonth - currentMonth) / (1000 * 60 * 60 * 24));
-    return dayEndMonth;
-}
+// const endOfMonth = (dt: Date) : number => {
+//     let currentDate: Date = new Date(dt);
+//     let month: number = dt.getMonth();
+//     let currentMonth: number = new Date(currentDate.getFullYear(),month,1).getTime();
+//     let nextMonth: number = new Date(currentDate.getFullYear(),month+1,1).getTime();
+//     let dayEndMonth: number = Math.floor((nextMonth - currentMonth) / (1000 * 60 * 60 * 24));
+//     return month;
+// }
 
-console.log(endOfWeek(new Date()));
+console.log(getDaysInMonth(4,2024));
 
 // bài 9: viết hàm đếm ngược thời gian đến tết dương lịch
 
