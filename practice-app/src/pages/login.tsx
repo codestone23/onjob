@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Container, ForgotPassword, FormContainer, FormDetails, ImageBackground, ImageLogo, Input, InputCheckbox, RememberMe, SmallTitle, TextRemember, Title, CreateAccount, ButtonSignUp, TextItem, ContinueWith, Horizontal, ContinueWithText, FooterSocialMedia } from "../assets/styles/login.styles";
+import { Button, Container, ForgotPassword, FormContainer, FormDetails, ImageBackground, ImageLogo, Input, InputCheckbox, RememberMe, SmallTitle, TextRemember, Title, CreateAccount, ButtonSignUp, TextItem, ContinueWith, Horizontal, ContinueWithText, FooterSocialMedia, HeaderBackground } from "../assets/styles/login.styles";
 
 const Form = styled.div`
     margin-top: 20px;
@@ -15,9 +15,9 @@ const Login: React.FC = () => {
     return (
         <>
             <Container>
-                <div style={{width:'100%', height: '100vh'}}>
+                <HeaderBackground style={{width:'100%', height: '100vh'}}>
                     <ImageBackground src={require("../assets/images/login/Rectangle_1.png")} alt="background login" />
-                </div>
+                </HeaderBackground>
                 <FormContainer>
                     <Form>
                         <Title>Login</Title>

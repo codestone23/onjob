@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { device } from "./breakpoints";
 
 export const Container = styled.div`
     display: flex;
@@ -27,6 +28,9 @@ export const Title = styled.h1`
     line-height: 3.782rem;
     text-align: left;
     margin-bottom: 1rem;
+    @media ${device.lg} {
+        font-size: 2.5rem;
+    }
 `;
 
 export const SmallTitle = styled.h3`
@@ -55,7 +59,24 @@ export const Input = styled.input`
     text-align: left;
     padding-left: 1rem;
     color: #818181;
+    max-width : 100%;
+    @media ${device.lg} {
+        width: 20.375rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
+    @media ${device.md} {
+       
+        font-size: 0.8rem;
+    }
 
+
+`;
+
+export const HeaderBackground = styled.div`
+    @media ${device.md} {
+        display: none;
+    }
 
 `;
 
@@ -74,6 +95,13 @@ export const FormDetails = styled.div`
     align-items: center;
     justify-content: space-between;
     margin: 1rem 0 1rem 0;
+    @media ${device.xs} {
+       
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
 `;
 
 export const ImageBackground = styled.img`
@@ -98,6 +126,14 @@ export const ForgotPassword = styled.div`
     line-height: 19.36px;
     text-align: left;
     color:#7754F6;
+    @media ${device.lg} {
+       
+        font-size: 0.8rem;
+    }
+    @media ${device.md} {
+       
+        font-size: 0.8rem;
+    }
 `;
 
 export const TextRemember = styled.div`
@@ -107,6 +143,15 @@ export const TextRemember = styled.div`
     line-height: 1.21rem;
     text-align: left;
     color: #818181;
+    @media ${device.lg} {
+       
+        font-size: 0.8rem;
+    }
+    @media ${device.md} {
+       
+        font-size: 0.8rem;
+    }
+    
 `;
 
 export const Button = styled.button`
@@ -125,6 +170,12 @@ export const Button = styled.button`
     text-align: center;
     color: #fff;
     margin-top: 1rem;
+    max-width : 100%;
+    @media ${device.lg} {
+        width: 20.375rem;
+        height: 3rem;
+        font-size: 1rem;
+    }
 `;
 
 
@@ -172,6 +223,14 @@ export const ContinueWithText = styled.div`
     line-height: 1.21rem;
     text-align: left;
     color:#818181;
+    @media ${device.lg} {
+       
+        font-size: 0.8rem;
+    }
+    @media ${device.md} {
+       
+        font-size: 0.8rem;
+    }
 
 `;
 
@@ -197,5 +256,13 @@ export const ImageLogo = styled.img`
     border: 0.063rem;
     // opacity: 0;
     margin:0 0.5rem 0 0.5rem;
+    @media ${device.lg} {
+        width:3.25rem;
+        height: 3.063rem;
+    }
+    @media ${device.lg} {
+        width:  3rem;
+        height: 2.85rem;
+    }
 
 `;
