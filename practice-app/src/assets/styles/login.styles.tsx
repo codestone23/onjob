@@ -44,7 +44,6 @@ export const SmallTitle = styled.h3`
 `;
 
 export const Input = styled.input`
-    width: 26.375rem;
     height: 3.75rem;
     top: 12.563rem;
     border: 0.063rem solid #D1D1D1;
@@ -59,21 +58,24 @@ export const Input = styled.input`
     text-align: left;
     padding-left: 1rem;
     color: #818181;
-    max-width : 100%;
+    width : 100%;
     @media ${device.lg} {
         width: 20.375rem;
         height: 3rem;
-        font-size: 1rem;
+        font-size: 0.875rem;
+        width: 100%;
     }
     @media ${device.md} {
        
-        font-size: 0.8rem;
+        font-size: 0.875rem;
     }
 
 
 `;
 
 export const HeaderBackground = styled.div`
+    width: 100%;
+    height: 100vh;
     @media ${device.md} {
         display: none;
     }
@@ -88,6 +90,13 @@ export const InputCheckbox = styled.input`
     opacity: 0px;
     background-color: #7754F6;
     accent-color: #7754F6;
+    &::before{
+        content: "";
+        width: 0.65em;
+        height: 0.65em;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+    }
 `;
 
 export const FormDetails = styled.div`
@@ -106,11 +115,9 @@ export const FormDetails = styled.div`
 
 export const ImageBackground = styled.img`
     width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
     object-fit: cover;
     height: 100%;
+    object-position: 0 0;
 `;
 
 export const RememberMe = styled.div`
@@ -128,11 +135,11 @@ export const ForgotPassword = styled.div`
     color:#7754F6;
     @media ${device.lg} {
        
-        font-size: 0.8rem;
+        font-size: 0.875rem;
     }
     @media ${device.md} {
        
-        font-size: 0.8rem;
+        font-size: 0.875rem;
     }
 `;
 
@@ -145,11 +152,11 @@ export const TextRemember = styled.div`
     color: #818181;
     @media ${device.lg} {
        
-        font-size: 0.8rem;
+        font-size: 0.875rem;
     }
     @media ${device.md} {
        
-        font-size: 0.8rem;
+        font-size: 0.875rem;
     }
     
 `;
@@ -170,11 +177,12 @@ export const Button = styled.button`
     text-align: center;
     color: #fff;
     margin-top: 1rem;
-    max-width : 100%;
+    width : 100%;
     @media ${device.lg} {
         width: 20.375rem;
         height: 3rem;
         font-size: 1rem;
+        width: 100%;
     }
 `;
 
@@ -225,11 +233,11 @@ export const ContinueWithText = styled.div`
     color:#818181;
     @media ${device.lg} {
        
-        font-size: 0.8rem;
+        font-size: 0.875rem;
     }
     @media ${device.md} {
        
-        font-size: 0.8rem;
+        font-size: 0.875rem;
     }
 
 `;
@@ -265,4 +273,10 @@ export const ImageLogo = styled.img`
         height: 2.85rem;
     }
 
+`;
+
+export const FormStyles = styled.div`
+    margin-top: 20px;
+    max-width: 75%;
+    width: fit-content;
 `;

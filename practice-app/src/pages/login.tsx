@@ -1,13 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Container, ForgotPassword, FormContainer, FormDetails, ImageBackground, ImageLogo, Input, InputCheckbox, RememberMe, SmallTitle, TextRemember, Title, CreateAccount, ButtonSignUp, TextItem, ContinueWith, Horizontal, ContinueWithText, FooterSocialMedia, HeaderBackground } from "../assets/styles/login.styles";
-
-const Form = styled.div`
-    margin-top: 20px;
-    max-width: 75%;
-    width: fit-content;
-`;
-
+import { Button, Container, ForgotPassword, FormContainer, FormDetails, ImageBackground, ImageLogo, Input, InputCheckbox, RememberMe, SmallTitle, TextRemember, Title, CreateAccount, ButtonSignUp, TextItem, ContinueWith, Horizontal, ContinueWithText, FooterSocialMedia, HeaderBackground, FormStyles } from "../assets/styles/login.styles";
 
 const Login: React.FC = () => {
 
@@ -15,26 +8,20 @@ const Login: React.FC = () => {
     return (
         <>
             <Container>
-                <HeaderBackground style={{width:'100%', height: '100vh'}}>
+                <HeaderBackground>
                     <ImageBackground src={require("../assets/images/login/Rectangle_1.png")} alt="background login" />
                 </HeaderBackground>
                 <FormContainer>
-                    <Form>
+                    <FormStyles>
                         <Title>Login</Title>
                         <SmallTitle>
                             Login your account in a seconds
                         </SmallTitle>
-                        <div>
-                            <div>
-                                <Input type="text" placeholder="Email Address" />
-                            </div>
-                            <div>
-                                <Input type="password" placeholder="Password" />
-                            </div>
-                        </div>
+                        <Input type="text" placeholder="Email Address" />
+                        <Input type="password" placeholder="Password" />
                         <FormDetails>
                             <RememberMe>
-                                <div><InputCheckbox type="checkbox" name="" id="" /></div>
+                                <InputCheckbox type="checkbox" name="" id="" />
                                 <TextRemember>Keep me logged in</TextRemember>
                             </RememberMe>
                             <ForgotPassword>Forget password?</ForgotPassword>
@@ -50,20 +37,12 @@ const Login: React.FC = () => {
                             <Horizontal></Horizontal>
                         </ContinueWith>
                         <FooterSocialMedia>
-                            <div>
-                                <ImageLogo src={require("../assets/images/login/Google.png")} alt="" />
-                            </div>
-                            <div>
-                                <ImageLogo src={require("../assets/images/login/Facebook.png")} alt="" />
-                            </div>
-                            <div>
-                                <ImageLogo src={require("../assets/images/login//Instagram.png")} alt="" />
-                            </div>
-                            <div>
-                                <ImageLogo src={require("../assets/images/login/Twitter.png")} alt="" />
-                            </div>
+                        <ImageLogo src={require("../assets/images/login/Google.png")} alt="" />
+                        <ImageLogo src={require("../assets/images/login/Facebook.png")} alt="" />
+                        <ImageLogo src={require("../assets/images/login//Instagram.png")} alt="" />
+                        <ImageLogo src={require("../assets/images/login/Twitter.png")} alt="" />
                         </FooterSocialMedia>
-                    </Form>
+                    </FormStyles>
                 </FormContainer>
             </Container>
         
