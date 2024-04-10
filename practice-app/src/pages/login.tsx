@@ -39,7 +39,7 @@ const Login: React.FC = () => {
                         <FooterSocialMedia>
                         <ImageLogo src={require("../assets/images/login/Google.png")} alt="" />
                         <ImageLogo src={require("../assets/images/login/Facebook.png")} alt="" />
-                        <ImageLogo src={require("../assets/images/login//Instagram.png")} alt="" />
+                        <ImageLogo src={require("../assets/images/login/Instagram.png")} alt="" />
                         <ImageLogo src={require("../assets/images/login/Twitter.png")} alt="" />
                         </FooterSocialMedia>
                     </FormStyles>
