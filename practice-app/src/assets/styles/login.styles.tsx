@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { device } from "./breakpoints";
 
+
 export const Container = styled.div`
     display: flex;
     justify-content: space-between;
@@ -23,7 +24,7 @@ export const FormContainer = styled.div`
 
 export const Title = styled.h1`
     font-size: 3.125rem;
-    // font-family: Inter;
+    font-family: Inter;
     font-weight: 700;
     line-height: 3.782rem;
     text-align: left;
@@ -51,7 +52,7 @@ export const Input = styled.input`
     border-radius: 0.625rem;
     // opacity: 0rem;
     margin-bottom: 1.875rem;
-    // font-family: Inter;
+    font-family: Inter;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.21rem;
@@ -68,6 +69,9 @@ export const Input = styled.input`
     @media ${device.md} {
        
         font-size: 0.875rem;
+    }
+    '&::focus-visible'{
+        border-color: #7754F6;
     }
 
 
@@ -127,7 +131,7 @@ export const RememberMe = styled.div`
 `;
 
 export const ForgotPassword = styled.div`
-    // font-family: Inter;
+    font-family: Inter;
     font-size: 16px;
     font-weight: 400;
     line-height: 19.36px;
@@ -144,7 +148,7 @@ export const ForgotPassword = styled.div`
 `;
 
 export const TextRemember = styled.div`
-    // font-family: Inter;
+    font-family: Inter;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.21rem;
@@ -170,7 +174,7 @@ export const Button = styled.button`
     border-radius: 0.625rem;
     background: #7754F6;
     box-shadow: 0px 15px 30px -10px #7754F645;
-    // font-family: Inter;
+    font-family: Inter;
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.21rem;
