@@ -11,13 +11,14 @@ import star1 from "@/assets/images/star1.svg";
 import star2 from "@/assets/images/star2.svg";
 import SiderDashboard from "@/components/SiderDashboard";
 import tab from "@/assets/images/tab.jpg";
+import { useRouter } from 'next/navigation'
 
 import type { DrawerProps, RadioChangeEvent } from 'antd';
 
 
 const Dashboard: React.FC = () => {
     const [open, setOpen] = useState(false);
-  
+    const router = useRouter();
     const showDrawer = () => {
       setOpen(true);
     };
@@ -25,6 +26,13 @@ const Dashboard: React.FC = () => {
     const onClose = () => {
       setOpen(false);
     };
+
+    const onExam = () => {
+        router.push('/exam', { scroll: false })
+      };
+      const logout = () => {
+        router.push('/login', { scroll: false })
+      };
   return (
     <>
         <Drawer
@@ -74,7 +82,7 @@ const Dashboard: React.FC = () => {
 
             </HeaderDashboard>
             <BodyDashboard>
-                <ItemExam>
+                <ItemExam onClick={onExam}>
                     <TitleExam>Kiểm tra an toàn bảo mật thông tin 2...</TitleExam>
                     <DescriptionItem>
                         <DescriptionItemSmall>
@@ -145,7 +153,7 @@ const Dashboard: React.FC = () => {
                             }}/>
                     </ListStar>
                 </ItemExam>
-                <ItemExam>
+                <ItemExam onClick={onExam}>
                     <TitleExam>Kiểm tra an toàn bảo mật thông tin 2...</TitleExam>
                     <DescriptionItem>
                         <DescriptionItemSmall>
@@ -216,7 +224,7 @@ const Dashboard: React.FC = () => {
                             }}/>
                     </ListStar>
                 </ItemExam>
-                 <ItemExam>
+                <ItemExam onClick={onExam}>
                     <TitleExam>Kiểm tra an toàn bảo mật thông tin 2...</TitleExam>
                     <DescriptionItem>
                         <DescriptionItemSmall>
@@ -287,7 +295,7 @@ const Dashboard: React.FC = () => {
                             }}/>
                     </ListStar>
                 </ItemExam>
-                <ItemExam>
+                <ItemExam onClick={onExam}>
                     <TitleExam>Kiểm tra an toàn bảo mật thông tin 2...</TitleExam>
                     <DescriptionItem>
                         <DescriptionItemSmall>
@@ -358,7 +366,7 @@ const Dashboard: React.FC = () => {
                             }}/>
                     </ListStar>
                 </ItemExam>
-                <ItemExam>
+                <ItemExam onClick={onExam}>
                     <TitleExam>Kiểm tra an toàn bảo mật thông tin 2...</TitleExam>
                     <DescriptionItem>
                         <DescriptionItemSmall>
@@ -429,7 +437,7 @@ const Dashboard: React.FC = () => {
                             }}/>
                     </ListStar>
                 </ItemExam>
-                 <ItemExam>
+                <ItemExam onClick={onExam}>
                     <TitleExam>Kiểm tra an toàn bảo mật thông tin 2...</TitleExam>
                     <DescriptionItem>
                         <DescriptionItemSmall>
@@ -500,6 +508,7 @@ const Dashboard: React.FC = () => {
                             }}/>
                     </ListStar>
                 </ItemExam>
+
 
 
             </BodyDashboard>

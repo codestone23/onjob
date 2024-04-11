@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
 import Image from 'next/image'
 import { SiderStyles, ImageAvatar, TextProfile, ButtonLogout } from "@/styles/dashboard";
+import { useRouter } from 'next/navigation';
 
 const SiderDasboard = () => {
+    const router = useRouter();
+      const logout = () => {
+        router.push('/login', { scroll: false })
+      };
   return (
     <SiderStyles>
         <ImageAvatar
@@ -14,7 +19,7 @@ const SiderDasboard = () => {
         />
         <TextProfile>User: thanhnh@gmail.com</TextProfile>
         <TextProfile>Point: 2488</TextProfile>
-        <ButtonLogout>LOGOUT</ButtonLogout>
+        <ButtonLogout onClick={logout}>LOGOUT</ButtonLogout>
     </SiderStyles>
   )
 }

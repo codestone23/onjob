@@ -94,7 +94,7 @@ export const ContainerForm = styled.div`
     }
     @media ${device.sm} {
         margin-top: 20rem;
-        height: 20rem;
+        height: 22rem;
         width: 95%;
         padding-top: 2rem;
         max-width: 100%;
