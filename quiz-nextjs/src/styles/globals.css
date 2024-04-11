@@ -105,10 +105,30 @@ a {
   max-width: '80%';
 }
 
-.ant-input-affix-wrapper .ant-input-suffix{
+.container .ant-input-affix-wrapper .ant-input-suffix{
   width: 2.5rem;
 }
 
-.ant-form-horizontal .ant-form-item-control{
+.container .ant-form-horizontal .ant-form-item-control{
   margin-left: 0;
+}
+
+.container .ant-input-outlined.ant-input-status-error:not(.ant-input-disabled){
+  border: none;
+}
+
+.container .ant-form-item{
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .container .ant-form-item{
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .container .remember__me.ant-form-item{
+    display: flex;
+    justify-content: flex-start;
+  }
 }

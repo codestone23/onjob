@@ -1,8 +1,9 @@
 import React from 'react';
 import background from '../assets/images/background.jpg';
+import background2 from '../assets/images/background2.svg';
 import Image from "next/image";
 import { Button, Checkbox, ConfigProvider, Form, type FormProps, Input } from 'antd';
-import { ButtonLogin, CheckboxLogin, CircleCamera, Container, ContainerForm, ContainInput, InputForm, InputFormPassword } from "@/styles/login";
+import { ButtonLogin, CheckboxLogin, CircleCamera, Container, ContainerForm, ContainInput, ImageBackground, ImageBackgroundTwo, ImageCamera, ImagePassword, ImagePersonal, InputForm, InputFormPassword } from "@/styles/login";
 
 // import "../styles/login.css";
 import personal from "../assets/images/personal.svg";
@@ -28,38 +29,41 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 const Login = () => {
   return (
     <ConfigProvider theme={{hashed: false}}>
-        <Container>
-                <Image
+        <Container className="container">
+                <ImageBackground
                     alt="background"
                     src={background}
                     placeholder="blur"
                     quality={100}
                     fill
                     sizes="100vw"
-                    style={{
-                        objectFit: 'cover',
-                        objectPosition: '0 0',
-                        zIndex:-1
-                    }}
+                />
+                <ImageBackgroundTwo
+                    alt="background2"
+                    src={background2}
+                    // placeholder="blur"
+                    quality={100}
+                    fill
+                    sizes="100vw"
                 />
                 <ContainerForm>
                     <CircleCamera>
-                    <Image
+                    <ImageCamera
                         alt="Camera"
                         src={camera}
                         sizes="9rem"
-                        style={{
-                            fontSize: '6rem',
-                            height: '6rem',
-                            width: '7rem'
-                        }}
                         />
                     </CircleCamera>
                     <Form
                         name="basic"
                         labelCol={{ span: 8 }}
                         wrapperCol={{ span: 16 }}
-                        style={{ maxWidth: '100%', padding: '0 4rem' }}
+                        style={{ maxWidth: '100%', padding: '0 2rem',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                         }}
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
                         onFinishFailed={onFinishFailed}
@@ -69,21 +73,12 @@ const Login = () => {
                         <Form.Item<FieldType>
                         name="username"
                         rules={[{ required: true, message: 'Please input your username!' }]}
-                        style={{
-                            // display: 'flex',
-                            width: '100%',
-                        }}
                         >
                             <ContainInput>
-                                <Image
+                                <ImagePersonal
                                     alt="Camera"
                                     src={personal}
-                                    sizes="9rem"
-                                    style={{
-                                        fontSize: '6rem',
-                                        width:' 7rem',
-                                        top: 0
-                                    }}
+                                    // sizes="9rem"
                                     />
                                     <InputForm
                                         placeholder="Username"                                        
@@ -95,25 +90,12 @@ const Login = () => {
                         <Form.Item<FieldType>
                         name="password"
                         rules={[{ required: true, message: 'Please input your password!' }]}
-                        style={{
-                            display: 'flex',
-                            width: '100%',
-                        }}
                         >
                             <ContainInput>
-                                <Image
+                                <ImagePassword
                                 alt="Camera"
                                 src={password}
-                                sizes="9rem"
-                                style={{
-                                    fontSize: '2rem',
-                                    width: '7rem',
-                                    height: '6rem',
-                                    padding: '1rem',
-                                    top: 0,
-                                    backgroundColor: 'white',
-                                    borderRadius: '4px'
-                                }}
+                                // sizes="9rem"
                                 />
                                 <InputFormPassword placeholder="Password"/>
 
@@ -125,7 +107,7 @@ const Login = () => {
                         valuePropName="checked"
                         wrapperCol={{ offset: 8, span: 16 }}
                         >
-                        <CheckboxLogin>Remember me</CheckboxLogin>
+                        <CheckboxLogin className="remember__me">Remember me</CheckboxLogin>
                         </Form.Item>
 
                         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

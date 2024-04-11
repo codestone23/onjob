@@ -1,10 +1,36 @@
 import styled from "styled-components";
 import { Button, Checkbox, Form, type FormProps, Input } from 'antd';
-
+import { device } from "./breakpoints";
+import Image from "next/image";
 
 export const Container = styled.div`
     width: 50%;
     float: right;
+    @media ${device.md} {
+        width: 100%;
+        float: none;
+        background-image: url(background2);
+    }
+`;
+
+export const ImageBackground = styled(Image)`
+    object-fit: cover;
+    object-position: top;
+    z-index:-1;
+    @media ${device.md} {
+        display: none;
+    }
+`;
+
+
+export const ImageBackgroundTwo = styled(Image)`
+    display: none;
+    object-fit: cover;
+    object-position: top;
+    z-index:-1;
+    @media ${device.md} {
+        display: block;
+    }
 `;
 
 export const CircleCamera = styled.div`
@@ -18,9 +44,26 @@ export const CircleCamera = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media ${device.md} {
+        width: 4rem;
+        height: 4rem;
+        top: 12rem;
+    }
+    @media ${device.sm} {
+        top: 18rem;
+    }
 
+`;
 
+export const ImageCamera = styled(Image)`
 
+    font-size: 6rem;
+    height: 6rem;
+    width: 7rem;
+    @media ${device.md} {
+        width: 3rem;
+        height: 3rem;
+    }
 `;
 
 export const ContainerForm = styled.div`
@@ -30,14 +73,23 @@ export const ContainerForm = styled.div`
     margin: auto;
     background:#999595;
     border: 3px solid #FBBC1A;
-    width: 32rem;
+    width: 80%;
     height:36rem;
     margin-top: 8rem;
     gap: 0px;
     border-radius: 6px;
     border: 3px 0px 0px 0px;
-
-
+    max-width: 90%;
+    @media ${device.md} {
+        margin-top: 14rem;
+        height: 28rem;
+    }
+    @media ${device.sm} {
+        margin-top: 20rem;
+        height: 20rem;
+        width: 95%;
+        padding-top: 2rem;
+    }
 `;
 
 export const FormStyles = styled(Form)`
@@ -54,6 +106,16 @@ export const InputForm = styled(Input)`
     border-radius: 4px;
     padding-left: 1rem;
     padding-right: 1rem;
+    border: none;
+    background: #F3F1F1;
+    @media ${device.lg} {
+        height: 4.5rem;
+        width: 10rem;
+    }
+    @media ${device.sm} {
+        height: 3rem;
+        width: 10rem;
+    }
 `;
 
 export const InputFormPassword = styled(Input.Password)`
@@ -64,6 +126,16 @@ export const InputFormPassword = styled(Input.Password)`
     border: none;
     border-radius: 4px;
     padding-left: 1rem;
+    background: #F3F1F1;
+    @media ${device.lg} {
+        height: 4.5rem;
+        width: 10rem;
+    }
+    @media ${device.sm} {
+        height: 3rem;
+        width: 10rem;
+    }
+
 `;
 
 export const ContainInput = styled.div`
@@ -72,14 +144,23 @@ export const ContainInput = styled.div`
     height: 6rem;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: #F3F1F1;
     border-radius: 4px;
-
-
+    @media ${device.lg} {
+        height: 4.5rem;
+    }
+    @media ${device.sm} {
+        height: 3rem;
+        width: 13rem;
+    }
 `;
 
 export const CheckboxLogin =  styled(Checkbox)`
     margin: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
 `;
 
 export const ButtonLogin = styled(Button)`
@@ -90,5 +171,47 @@ export const ButtonLogin = styled(Button)`
     padding: 0;
     height: 3rem;
     border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media ${device.lg} {
+        height: 4rem;
+        width: 15rem;
+    } 
+    @media ${device.sm} {
+        height: 2.5rem;
+        width: 13rem;
+    }
+`;
+
+export const ImagePersonal = styled(Image)`
+    font-size: 6rem;
+    width: 7rem;
+    top: 0;
+    @media ${device.lg} {
+        width: 5rem;
+        /* height: 5rem; */
+    }
+    @media ${device.sm} {
+        height: 3rem;
+        width: auto;
+    }
+`;
+export const ImagePassword = styled(Image)`
+    font-size: 2rem ;
+    width: 7rem;
+    height: 6rem;
+    padding: 1rem;
+    top: 0;
+    background-color: white;
+    border-radius: 4px;
+    @media ${device.lg} {
+        width: 5rem;
+        height: 4.5rem;
+    }
+    @media ${device.sm} {
+        height: 3rem;
+        width: 3.8rem;
+    }
 
 `;
