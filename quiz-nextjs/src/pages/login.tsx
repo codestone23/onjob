@@ -8,9 +8,12 @@ import { ButtonLogin, CheckboxLogin, CircleCamera, Container, ContainerForm, Con
 // import "../styles/login.css";
 import personal from "../assets/images/personal.svg";
 import password from "../assets/images/password.svg";
-
-
 import camera from "../assets/images/camera.svg";
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+
+
+
 
 type FieldType = {
   username?: string;
@@ -18,15 +21,16 @@ type FieldType = {
   remember?: string;
 };
 
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-  console.log('Success:', values);
-};
-
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
-
-const Login = () => {
+const Login: React.FC = () => {
+    const router = useRouter();
+    const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+        console.log('Success:', values);
+        router.push('/dashboard', { scroll: false })
+      };
+      
+      const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+      };
   return (
     <ConfigProvider theme={{hashed: false}}>
         <Container className="container">
@@ -112,7 +116,9 @@ const Login = () => {
 
                         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                         <ButtonLogin type="primary" htmlType="submit">
-                            LOGIN
+                            {/* <Link href="/dashboard"> */}
+                                LOGIN
+                            {/* </Link> */}
                         </ButtonLogin>
                         </Form.Item>
                     </Form>

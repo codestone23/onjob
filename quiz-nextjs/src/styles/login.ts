@@ -19,18 +19,26 @@ export const ImageBackground = styled(Image)`
     z-index:-1;
     @media ${device.md} {
         display: none;
+        
     }
 `;
 
 
 export const ImageBackgroundTwo = styled(Image)`
     display: none;
-    object-fit: cover;
+    object-fit: contain;
     object-position: top;
     z-index:-1;
+    background-color: black;
     @media ${device.md} {
         display: block;
+        object-fit: cover;
     }
+    @media ${device.sm} {
+        display: block;
+        object-fit: contain;
+    }
+    
 `;
 
 export const CircleCamera = styled.div`
@@ -89,6 +97,7 @@ export const ContainerForm = styled.div`
         height: 20rem;
         width: 95%;
         padding-top: 2rem;
+        max-width: 100%;
     }
 `;
 
@@ -115,6 +124,7 @@ export const InputForm = styled(Input)`
     @media ${device.sm} {
         height: 3rem;
         width: 10rem;
+        max-width: 100%;
     }
 `;
 
@@ -134,6 +144,7 @@ export const InputFormPassword = styled(Input.Password)`
     @media ${device.sm} {
         height: 3rem;
         width: 10rem;
+        max-width: 100%;
     }
 
 `;
@@ -152,6 +163,7 @@ export const ContainInput = styled.div`
     @media ${device.sm} {
         height: 3rem;
         width: 13rem;
+        max-width: 100%;
     }
 `;
 
@@ -178,9 +190,11 @@ export const ButtonLogin = styled(Button)`
         height: 4rem;
         width: 15rem;
     } 
+    
     @media ${device.sm} {
         height: 2.5rem;
         width: 13rem;
+        max-width: 100%;
     }
 `;
 
