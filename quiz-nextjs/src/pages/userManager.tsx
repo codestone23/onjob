@@ -34,7 +34,7 @@ import { ToastContainer } from "react-toastify";
 import { User, Question } from "@/data/contants";
 import { users } from "@/data/contants";
 import { Select } from "antd";
-import { getCurrentUser } from "@/services/user.service";
+import { getCurrentUser } from "@/pages/api/user/user.service";
 import SiderManager from "../components/SiderManager";
 import {
   BodyManager,
@@ -133,7 +133,7 @@ const Dashboard: React.FC = () => {
               alt="Clock"
               onClick={showDrawer}
             />
-             User Manager
+            User Manager
           </HeaderMobile>
           <TextFrontHeader>Home &gt; User Manager</TextFrontHeader>
           <HeaderDashboard>
@@ -170,7 +170,7 @@ const Dashboard: React.FC = () => {
           <TextFrontHeader>Tổng số tài khoản: 85</TextFrontHeader>
           <BodyManager>
             <RowItem gutter={16}>
-              {listUser.map((u,i) => {
+              {listUser.map((u, i) => {
                 return (
                   <ColUser key={i}>
                     <TextCol>

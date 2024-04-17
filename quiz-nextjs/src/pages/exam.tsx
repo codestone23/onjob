@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { Layout, Menu, Button, theme,Drawer, Radio, } from 'antd';
 import QuestionExamComponent from "@/components/QuestionExamComponent";
 import SiderDashboard from "@/components/SiderDashboard";
-import { questions } from "@/data/contants";
+import { Question, questions } from "@/data/contants";
 
 const Exam = () => {
     const router = useRouter();
@@ -15,7 +15,7 @@ const Exam = () => {
     const [open, setOpen] = useState(false);
     const [indexAnswer, setIndexAnswer] = useState<string | null>(searchParams.get('index'));
     console.log(indexAnswer);
-    const [itemAnswer, setItemAnswer] = useState({});
+    const [itemAnswer, setItemAnswer] = useState<Question | null>();
     useEffect(()=> {
         setIndexAnswer(searchParams.get('index'));
         let relItem = questions.filter((e,i) => e.id.toString() == indexAnswer)[0];
@@ -70,7 +70,7 @@ const Exam = () => {
                         alt="Clock"
                         onClick={showDrawer}
                     />
-                {itemAnswer.topic}
+                {itemAnswer?.topic}
             </HeaderMobileExam>
             <ProgressExam>
                 <TitleProgress>Kiểm tra an toàn bảo mật thông tin lần 2</TitleProgress>

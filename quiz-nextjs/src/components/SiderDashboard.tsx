@@ -5,8 +5,9 @@ import { SiderStyles, ImageAvatar, TextProfile, ButtonLogout, ButtonDashboard } 
 import { useRouter } from 'next/navigation';
 import { User } from "@/data/contants";
 import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
+import { UserLogin } from "@/types/user";
 interface Props{
-    user?: User | Object;
+    user?: UserLogin;
 }
 
 
@@ -27,7 +28,7 @@ const SiderDashboard:React.FC<Props> = ({user}) => {
             alt="Avatar"
         />
         <TextProfile>User: {user?.email}</TextProfile>
-        <TextProfile>Point: {user?.points}</TextProfile>
+        <TextProfile>Point: 0</TextProfile>
         <ButtonDashboard>
           <ButtonLogout onClick={logout}>LOGOUT</ButtonLogout>
         </ButtonDashboard>

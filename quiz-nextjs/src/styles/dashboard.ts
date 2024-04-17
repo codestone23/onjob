@@ -1,10 +1,8 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { CaretDownOutlined, SearchOutlined } from "@ant-design/icons";
-import {
-  Col,
-} from "antd";
-
+import { Col, Select } from "antd";
+import { Pagination, Drawer, Row } from "antd";
 import { device } from "./breakpoints";
 export const Container = styled.div`
   display: flex;
@@ -253,4 +251,30 @@ export const DifficultQuestion = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const DisplaySpin = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+  background-color: #f3f1f1;
+`;
+
+export const DrawerStyles = styled(Drawer)`
+  background: "#D9D9D9";
+  border-right: 1px solid #a4a5a5;
+`;
+
+export const SelectStyles = styled(Select)`
+  width: 100%;
+  height:100%;
+`;
+
+export const ImageSelect = styled(Image)`
+  padding-left: 0.5rem;
+`;
+export const ImageExam = styled(Image)`
+  padding-right: 0.5rem;
 `;

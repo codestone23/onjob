@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Pagination,
-  Drawer,
-  Row,
-} from "antd";
+import { Pagination, Drawer, Row } from "antd";
+import { Alert, Flex, Spin } from "antd";
 import Image from "next/image";
 import {
   Container,
@@ -26,6 +23,11 @@ import {
   SiderPC,
   ColStyles,
   DifficultQuestion,
+  DisplaySpin,
+  DrawerStyles,
+  SelectStyles,
+  ImageSelect,
+  ImageExam,
 } from "@/styles/dashboard";
 import achive from "@/assets/images/achive.svg";
 import clock from "@/assets/images/clock.svg";
@@ -38,19 +40,23 @@ import { ToastContainer } from "react-toastify";
 import { User, Question } from "@/data/contants";
 import { questions } from "@/data/contants";
 import { Select } from "antd";
-import { getCurrentUser } from "@/services/user.service";
+import { getCurrentUser } from "@/pages/api/user/user.service";
+import { UserLogin } from "@/types/user";
 
 const Dashboard: React.FC = () => {
-  const [user, setUser] = useState<User | Object>({});
+  const [user, setUser] = useState<UserLogin | undefined>();
+  const [pending, setPending] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getCurrentUser();
+        const data: UserLogin | undefined = await getCurrentUser();
         console.log(data);
         setUser(data);
       } catch (error) {
         console.error("Error:", error);
+      } finally {
+        setPending(false);
       }
     }
     fetchData();
@@ -63,7 +69,6 @@ const Dashboard: React.FC = () => {
   );
   const page: string = searchParams.get("pageIndex") || "1";
   const pageNumber: number = parseInt(page);
-  console.log(page);
   const [pageIndex, setPageIndex] = useState<number>(parseInt(page));
   const [pageSize, setPageSize] = useState(6);
   const [textSearch, setTextSearch] = useState<string>(
@@ -82,6 +87,7 @@ const Dashboard: React.FC = () => {
     console.log(`selected ${value}`);
   };
   useEffect(() => {
+    console.log("1");
     if (searchParams.get("item") == "0" || !searchParams.get("item")) {
       setTotalQuestion(
         questions.filter((e) =>
@@ -101,15 +107,14 @@ const Dashboard: React.FC = () => {
   }, [textSearch, selectItem, searchParams]);
 
   useEffect(() => {
+    console.log("2");
     const updatedListQuestion = totalQuestion.slice(
       (pageNumber - 1) * pageSize,
       pageNumber * pageSize
     );
     setListQuestion(updatedListQuestion);
-    console.log((pageNumber - 1) * pageSize + 1, pageNumber * pageSize);
-    console.log(updatedListQuestion);
   }, [totalQuestion, pageNumber, searchParams]);
-
+  console.log("3");
   const showDrawer = () => {
     setOpen(true);
   };
@@ -117,22 +122,23 @@ const Dashboard: React.FC = () => {
   const onClose = () => {
     setOpen(false);
   };
-
-  return (
+  console.log(pending);
+  return pending ? (
+    <DisplaySpin>
+      <Flex align="center" gap="middle">
+        <Spin size="large" />
+      </Flex>
+    </DisplaySpin>
+  ) : (
     <>
-      <Drawer
+      <DrawerStyles
         placement="left"
         closable={false}
         onClose={onClose}
         open={open}
-        style={{
-          background: "#D9D9D9",
-          // width: '70%',
-          borderRight: "1px solid #a4a5a5",
-        }}
       >
         <SiderDashboard user={user} />
-      </Drawer>
+      </DrawerStyles>
       <Container>
         <SiderPC>
           <SiderDashboard user={user} />
@@ -172,109 +178,90 @@ const Dashboard: React.FC = () => {
               </SearchContain>
             </HeaderItemLeft>
             <HeaderItemRight>
-              <Select
-                defaultValue="Difficult"
-                style={{ width: "100%", height: "100%" }}
+              <SelectStyles
+                value={searchParams.get("item") || selectItem}
                 onChange={handleChange}
                 options={[
                   {
-                    value: 0,
+                    value: "0",
                     label: (
                       <DifficultQuestion>
                         Tất cả
-                        <Image
+                        <ImageSelect
                           src={star2}
                           width={30}
                           height={30}
                           alt="Achieve"
-                          style={{
-                            paddingLeft: "0.5rem",
-                          }}
                         />
                       </DifficultQuestion>
                     ),
                   },
                   {
-                    value: 1,
+                    value: "1",
                     label: (
                       <DifficultQuestion>
                         Độ khó 1{" "}
-                        <Image
+                        <ImageSelect
                           src={star2}
                           width={30}
                           height={30}
                           alt="Achieve"
-                          style={{
-                            paddingLeft: "0.5rem",
-                          }}
                         />
                       </DifficultQuestion>
                     ),
                   },
                   {
-                    value: 2,
+                    value: "2",
                     label: (
                       <DifficultQuestion>
                         Độ khó 2{" "}
-                        <Image
+                        <ImageSelect
                           src={star2}
                           width={30}
                           height={30}
                           alt="Achieve"
-                          style={{
-                            paddingLeft: "0.5rem",
-                          }}
                         />
                       </DifficultQuestion>
                     ),
                   },
                   {
-                    value: 3,
+                    value: "3",
                     label: (
                       <DifficultQuestion>
                         Độ khó 3{" "}
-                        <Image
+                        <ImageSelect
                           src={star2}
                           width={30}
                           height={30}
                           alt="Achieve"
-                          style={{
-                            paddingLeft: "0.5rem",
-                          }}
                         />
                       </DifficultQuestion>
                     ),
                   },
                   {
-                    value: 4,
+                    value: "4",
                     label: (
                       <DifficultQuestion>
                         Độ khó 4{" "}
-                        <Image
+                        <ImageSelect
                           src={star2}
                           width={30}
                           height={30}
                           alt="Achieve"
-                          style={{
-                            paddingLeft: "0.5rem",
-                          }}
                         />
                       </DifficultQuestion>
                     ),
                   },
                   {
-                    value: 5,
+                    value: "5",
                     label: (
                       <DifficultQuestion>
                         Độ khó 5{" "}
-                        <Image
+                        <ImageSelect
                           src={star2}
                           width={30}
                           height={30}
                           alt="Achieve"
-                          style={{
-                            paddingLeft: "0.5rem",
-                          }}
                         />
                       </DifficultQuestion>
                     ),
@@ -300,26 +287,20 @@ const Dashboard: React.FC = () => {
                     <TitleExam>{question.topic}.</TitleExam>
                     <DescriptionItem>
                       <DescriptionItemSmall>
-                        <Image
+                        <ImageExam
                           src={clock}
                           width={30}
                           height={30}
                           alt="Clock"
-                          style={{
-                            paddingRight: "0.5rem",
-                          }}
                         />
                         <div>{question.time} phút</div>
                       </DescriptionItemSmall>
                       <DescriptionItemSmall>
-                        <Image
+                        <ImageExam
                           src={achive}
                           width={30}
                           height={30}
                           alt="Achive"
-                          style={{
-                            paddingRight: "0.5rem",
-                          }}
                         />
                         <div>{question.points}/250 điểm</div>
                       </DescriptionItemSmall>
@@ -327,29 +308,23 @@ const Dashboard: React.FC = () => {
                     <ListStar>
                       {Array.from({ length: question.level + 1 }).map(
                         (_, index) => (
-                          <Image
+                          <ImageExam
                             key={index}
                             src={star2}
                             width={30}
                             height={30}
                             alt="Achieve"
-                            style={{
-                              paddingRight: "0.5rem",
-                            }}
                           />
                         )
                       )}
                       {Array.from({ length: 4 - question.level }).map(
                         (_, index) => (
-                          <Image
+                          <ImageExam
                             key={index}
                             src={star1}
                             width={30}
                             height={30}
                             alt="Achieve"
-                            style={{
-                              paddingRight: "0.5rem",
-                            }}
                           />
                         )
                       )}

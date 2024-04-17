@@ -5,8 +5,6 @@ export interface User{
     password: string,
     points: number
 }
-
-
 export interface Question{
     id : number,
     topic: string,
@@ -15,11 +13,9 @@ export interface Question{
     level: number,
     questionItem: Answer<ItemAnswer>[],
 }
-
 export interface ItemAnswer{
     name: string,
     key: number,
-
 }
 
 export interface Answer<Type>{
@@ -27,11 +23,7 @@ export interface Answer<Type>{
     topic: string,
     listItem: Type[],
     keyRight: number,
-    
-
 }
-
-
 
 export const users: User[] = [
     { id : 1, email: 'user1@gmail.com', username: 'user1', password: '123' , points: 0},

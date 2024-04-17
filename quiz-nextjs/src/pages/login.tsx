@@ -5,6 +5,7 @@ import {
   Container,
   ContainerForm,
   ContainInput,
+  FormLogin,
   ImageBackground,
   ImageBackgroundTwo,
   ImageCamera,
@@ -24,7 +25,7 @@ import pass from "../assets/images/password.svg";
 import personal from "../assets/images/personal.svg";
 import { ShowToast } from "@/components/notify/ShowToast";
 import "react-toastify/dist/ReactToastify.css";
-import { LoginSample } from "../services/user.service";
+import { LoginSample } from "./api/user/user.service";
 import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
 
 type FieldType = {
@@ -34,19 +35,19 @@ type FieldType = {
 };
 
 const Login: React.FC = () => {
-    const router = useRouter();
-    const [open, setOpen] = useState<boolean>(false);
-    useEffect(() => {
-      async function fetchData() {
-          const token = getCookie("token");
-          if (token) {
-            router.push("/dashboard", { scroll: false });
-          } else{
-            setOpen(true);
-          }
+  const router = useRouter();
+  const [open, setOpen] = useState<boolean>(false);
+  useEffect(() => {
+    async function fetchData() {
+      const token = getCookie("token");
+      if (token) {
+        router.push("/dashboard", { scroll: false });
+      } else {
+        setOpen(true);
       }
-      fetchData();
-    }, []);
+    }
+    fetchData();
+  }, []);
   const [username, setUsername] = useState<string | undefined>("");
   const [password, setPassword] = useState<string | undefined>("");
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
@@ -55,7 +56,7 @@ const Login: React.FC = () => {
       console.log(response);
       if (response?.token) {
         // localStorage.setItem("token", JSON.stringify(response?.token));
-        setCookie("token", JSON.stringify(response?.token));
+        setCookie("token", JSON.stringify(response?.token), { maxAge: 10});
         localStorage.setItem("user", JSON.stringify(response));
       }
       if (response) {
@@ -73,7 +74,7 @@ const Login: React.FC = () => {
     console.log("Failed:", errorInfo);
     ShowToast("error", "Email or Password do not correct");
   };
-  return !open ? (null) : (
+  return !open ? null : (
     <Container className="container">
       <ImageBackground
         alt="background"
@@ -86,7 +87,6 @@ const Login: React.FC = () => {
       <ImageBackgroundTwo
         alt="background2"
         src={background2}
-        // placeholder="blur"
         quality={100}
         fill
         sizes="100vw"
@@ -95,18 +95,10 @@ const Login: React.FC = () => {
         <CircleCamera>
           <ImageCamera alt="Camera" src={camera} sizes="9rem" />
         </CircleCamera>
-        <Form
+        <FormLogin
           name="basic"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
-          style={{
-            maxWidth: "100%",
-            padding: "0 2rem",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
@@ -170,7 +162,7 @@ const Login: React.FC = () => {
               {/* </Link> */}
             </ButtonLogin>
           </Form.Item>
-        </Form>
+        </FormLogin>
       </ContainerForm>
       <ToastContainer />
     </Container>

@@ -1,30 +1,8 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { UserLogin } from "../types/user";
-import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
+import axios from "axios";
+import { UserLogin } from "../../../types/user";
+import { axiosInstance } from "../axios";
 
 const API_URL = "https://dummyjson.com/auth/";
-
-const axiosInstance: AxiosInstance = axios.create({
-  baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const accessToken: string = getCookie("token") || "";
-    const token: string | null = JSON.parse(accessToken);
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 
 export async function LoginSample(
   email: string | undefined,
@@ -45,17 +23,13 @@ export async function LoginSample(
       }
     );
 
-    // console.log(response.data)
     return response.data;
   } catch (error) {
     console.error("Error:", error);
-    // throw error;
   }
 }
 
 export async function getCurrentUser() {
-  const accessToken: string = getCookie("token") || "";
-  const token: string | null = JSON.parse(accessToken);
   try {
     const response = await axiosInstance.get<UserLogin>("/me");
     console.log(response.data);
@@ -67,9 +41,6 @@ export async function getCurrentUser() {
 }
 
 export async function refreshToken() {
-    const accessToken: string = getCookie("token") || "";
-    const token: string | null = JSON.parse(accessToken);
-
   try {
     const response = await axiosInstance.post("refresh",
       {

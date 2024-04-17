@@ -22,6 +22,15 @@ export const ImageBackground = styled(Image)`
   }
 `;
 
+export const FormLogin = styled(Form)`
+  max-width: 100%;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const ImageBackgroundTwo = styled(Image)`
   display: none;
   object-fit: contain;
