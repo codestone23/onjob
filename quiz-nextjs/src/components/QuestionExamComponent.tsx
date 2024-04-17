@@ -30,6 +30,9 @@ const QuestionExamComponent = () => {
               <QuestionItem>11</QuestionItem>
               <QuestionItem>12</QuestionItem>
               <QuestionItem>13</QuestionItem>
+              <QuestionItem>14</QuestionItem>
+              <QuestionItem>15</QuestionItem>
+              <QuestionItem>16</QuestionItem>
           </QuestionContainer>
           <ButtonSubmit onClick={onSubmit}>
               <SubmitExam>

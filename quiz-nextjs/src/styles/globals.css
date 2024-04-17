@@ -1,9 +1,9 @@
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -102,47 +102,55 @@ a {
   }
 }
 
-.form__styles{
-  max-width: '80%';
+.form__styles {
+  max-width: "80%";
 }
 
-.container .ant-input-affix-wrapper .ant-input-suffix{
-  width: 2.5rem;
+.container .ant-input-affix-wrapper .ant-input-suffix {
+  width: 2.8rem;
 }
 
-.container .ant-form-horizontal .ant-form-item-control{
+.container .ant-form-horizontal .ant-form-item-control {
   margin-left: 0;
 }
 
-.container .ant-input-outlined.ant-input-status-error:not(.ant-input-disabled){
+.container .ant-input-outlined.ant-input-status-error:not(.ant-input-disabled) {
   border: none;
 }
 
-.container .ant-form-item{
+.container .ant-form-item {
   width: 100%;
 }
 
-.dashboard__screen.ant-layout .ant-layout-sider-children{
-  background: #D9D9D9;
+.dashboard__screen.ant-layout .ant-layout-sider-children {
+  background: #d9d9d9;
 }
 
-.dashboard__screen .ant-drawer-content-wrapper{
+.dashboard__screen .ant-drawer-content-wrapper {
   width: 70%;
 }
 
-.ant-modal .ant-modal-content{
+.ant-modal .ant-modal-content {
   height: 40rem;
-  background: #D9D9D9;
+  background: #d9d9d9;
   border: 1px solid #00000080;
+}
+.ant-pagination li.ant-pagination-item {
+  background-color: white;
+}
+
+.ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: #d9d9d9;
+  border: none;
 }
 
 @media (max-width: 600px) {
-  .container .ant-form-item{
+  .container .ant-form-item {
     width: 100%;
     display: flex;
     align-items: center;
   }
-  .container .remember__me.ant-form-item{
+  .container .remember__me.ant-form-item {
     display: flex;
     justify-content: flex-start;
   }

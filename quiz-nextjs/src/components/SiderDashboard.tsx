@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import avatar from '../assets/images/avatar.jpg';
 import Image from 'next/image'
-import { SiderStyles, ImageAvatar, TextProfile, ButtonLogout } from "@/styles/dashboard";
+import { SiderStyles, ImageAvatar, TextProfile, ButtonLogout, ButtonDashboard } from "@/styles/dashboard";
 import { useRouter } from 'next/navigation';
+import { User } from "@/data/contants";
+import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
+interface Props{
+    user?: User | Object;
+}
 
-const SiderDasboard = () => {
+
+const SiderDashboard:React.FC<Props> = ({user}) => {
     const router = useRouter();
       const logout = () => {
+        localStorage.removeItem('user');
+        deleteCookie("token");
         router.push('/login', { scroll: false })
       };
+      console.log(user)
   return (
     <SiderStyles>
         <ImageAvatar
@@ -17,11 +26,13 @@ const SiderDasboard = () => {
             height={120}
             alt="Avatar"
         />
-        <TextProfile>User: thanhnh@gmail.com</TextProfile>
-        <TextProfile>Point: 2488</TextProfile>
-        <ButtonLogout onClick={logout}>LOGOUT</ButtonLogout>
+        <TextProfile>User: {user?.email}</TextProfile>
+        <TextProfile>Point: {user?.points}</TextProfile>
+        <ButtonDashboard>
+          <ButtonLogout onClick={logout}>LOGOUT</ButtonLogout>
+        </ButtonDashboard>
     </SiderStyles>
   )
 }
 
-export default SiderDasboard
+export default SiderDashboard;

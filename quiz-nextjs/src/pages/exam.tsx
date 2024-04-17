@@ -1,15 +1,36 @@
 import { AnswerExam, BodyExam, ButtonExam, ButtonLeft, ButtonMove, ButtonRight, ButtonSubmit, ButtonTransfer, CheckboxItem, ContainerExam, ContainQuestion, ContentItem, ContentProgress, HeaderMobileExam, ImageTabExam, ItemAnswer, ModalExam, ProgressExam, ProgressStyles, QuestionContainer, QuestionExam, SiderExam, TimeProgress, TitleExam, TitleProgress } from "@/styles/exam"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import tab from "@/assets/images/tab.jpg";
-import { Button, Modal } from 'antd';
-import { useRouter } from 'next/navigation'
-
+import { Modal } from 'antd';
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Layout, Menu, Button, theme,Drawer, Radio, } from 'antd';
 import QuestionExamComponent from "@/components/QuestionExamComponent";
+import SiderDashboard from "@/components/SiderDashboard";
+import { questions } from "@/data/contants";
 
 const Exam = () => {
     const router = useRouter();
+    const searchParams = useSearchParams()
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [open, setOpen] = useState(false);
+    const [indexAnswer, setIndexAnswer] = useState<string | null>(searchParams.get('index'));
+    console.log(indexAnswer);
+    const [itemAnswer, setItemAnswer] = useState({});
+    useEffect(()=> {
+        setIndexAnswer(searchParams.get('index'));
+        let relItem = questions.filter((e,i) => e.id.toString() == indexAnswer)[0];
+        setItemAnswer(relItem);
+        console.log(indexAnswer);
+        console.log(itemAnswer);
+        console.log(questions)
+    },[indexAnswer])
+    const showDrawer = () => {
+      setOpen(true);
+    };
+  
+    const onClose = () => {
+      setOpen(false);
+    };
     const showModal = () => {
       setIsModalOpen(true);
     };
@@ -25,6 +46,20 @@ const Exam = () => {
         router.push('/examFinish', { scroll: false })
       };
   return (
+    <>
+        <Drawer
+            placement="left"
+            closable={false}
+            onClose={onClose}
+            open={open}
+            style={{
+                background :'#D9D9D9',
+                // width: '70%',
+                borderRight:'1px solid #a4a5a5',
+            }}
+        >
+            <SiderDashboard />
+        </Drawer>
     <ContainerExam>
         <BodyExam>
             <HeaderMobileExam>
@@ -33,9 +68,9 @@ const Exam = () => {
                         width={30}
                         height={30}
                         alt="Clock"
-                        onClick={showModal}
+                        onClick={showDrawer}
                     />
-                Làm bài thi
+                {itemAnswer.topic}
             </HeaderMobileExam>
             <ProgressExam>
                 <TitleProgress>Kiểm tra an toàn bảo mật thông tin lần 2</TitleProgress>
@@ -83,6 +118,7 @@ const Exam = () => {
             <QuestionExamComponent /> 
       </ModalExam>
     </ContainerExam>
+    </>
   )
 }
 
