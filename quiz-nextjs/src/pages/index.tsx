@@ -13,19 +13,6 @@ export default function Home(props: any) {
   useEffect(() => {
     async function fetchData() {
       try {
-        // const data = await getCurrentUser();
-        // if(data) {
-        //     refreshToken().then((response) => {
-        //         setCookie("token",response?.token);
-        //         localStorage.setItem("user", JSON.stringify(response));
-        //     })
-        //     router.push('/dashboard', { scroll: false });
-        // }else{
-        //   const { pathname } = Router;
-        //   if (pathname == '/') {
-        //     router.push('/login', { scroll: false })
-        //   }
-        // }
         const token = getCookie("token");
         if (token) {
           router.push("/dashboard", { scroll: false });
