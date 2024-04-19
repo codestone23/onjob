@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import Image from "next/image";
-import { CaretDownOutlined, SearchOutlined } from "@ant-design/icons";
+import { CaretDownOutlined, CloudUploadOutlined, SearchOutlined } from "@ant-design/icons";
 import { Col, Select } from "antd";
 import { Pagination, Drawer, Row } from "antd";
 import { device } from "./breakpoints";
+import { EditOutlined } from "@ant-design/icons";
+
 export const Container = styled.div`
   display: flex;
 `;
@@ -35,6 +37,8 @@ export const ImageAvatar = styled(Image)`
   display: flex;
   justify-content: center;
   margin-bottom: 2rem;
+  border: 1px solid #000;
+  width: fit-content;
 `;
 
 export const TextProfile = styled.div`
@@ -42,14 +46,15 @@ export const TextProfile = styled.div`
   margin: auto;
   font-size: 1rem;
   font-weight: 600;
+  margin-bottom: .5rem;
 `;
 
 export const ButtonLogout = styled.div`
-  position: absolute;
+  /* position: absolute; */
   bottom: 2rem;
   background: #c9cbcb;
   border: 1px solid #a4a5a5;
-  width: 7rem;
+  width: 6rem;
   height: 3rem;
   display: flex;
   justify-content: center;
@@ -237,7 +242,12 @@ export const ImageTab = styled(Image)`
 `;
 export const ButtonDashboard = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  height: 55vh;
+  align-items: flex-end;
+  @media ${device.md} {
+    height: 50vh;
+  }
 `;
 
 export const SiderPC = styled.div`
@@ -263,13 +273,16 @@ export const DisplaySpin = styled.div`
 `;
 
 export const DrawerStyles = styled(Drawer)`
-  background: "#D9D9D9";
+  background-color: #d9d9d9;
   border-right: 1px solid #a4a5a5;
+  .ant-drawer-body{
+    background-color: #d9d9d9;
+  }
 `;
 
 export const SelectStyles = styled(Select)`
   width: 100%;
-  height:100%;
+  height: 100%;
 `;
 
 export const ImageSelect = styled(Image)`
@@ -277,4 +290,27 @@ export const ImageSelect = styled(Image)`
 `;
 export const ImageExam = styled(Image)`
   padding-right: 0.5rem;
+`;
+
+export const CloudUploadOutlinedStyles  = styled(CloudUploadOutlined)`
+  position: absolute;
+  font-size: 1rem;
+  bottom:-.5rem ;
+  right: 0;
+  background-color: white;
+  padding:.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    background-color: #a4a5a5;
+    
+  }
+
+`;
+
+export const ContainImage = styled.div`
+  position: relative;
+  width: fit-content;
+  margin: auto;
+
 `;

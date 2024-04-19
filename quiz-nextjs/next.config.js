@@ -15,6 +15,7 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  images: { domains: ['robohash.org'] },
 };
 
 module.exports = nextConfig;

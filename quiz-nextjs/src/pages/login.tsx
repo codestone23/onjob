@@ -1,4 +1,5 @@
 import {
+  ButtonLanguage,
   ButtonLogin,
   CheckboxLogin,
   CircleCamera,
@@ -13,6 +14,7 @@ import {
   ImagePersonal,
   InputForm,
   InputFormPassword,
+  SwitchLanguage,
 } from "@/styles/login";
 import { Form, type FormProps } from "antd";
 import React, { useState, useEffect } from "react";
@@ -27,6 +29,10 @@ import { ShowToast } from "@/components/notify/ShowToast";
 import "react-toastify/dist/ReactToastify.css";
 import { LoginSample } from "./api/user/user.service";
 import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
+import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import { setUserLogin, getUserLogin } from "@/stores/slices/account";
+import { UserLogin } from "@/types/user";
 
 type FieldType = {
   username?: string;
@@ -34,9 +40,23 @@ type FieldType = {
   remember?: string;
 };
 
+const lngs = [
+  { code: "en", native: "English" },
+  { code: "vn", native: "Vietnamese" },
+];
+
 const Login: React.FC = () => {
+  const itemsInAccount: UserLogin | undefined = useSelector(getUserLogin);
+  console.log(itemsInAccount);
+  const dispatch = useDispatch();
   const router = useRouter();
+  const { t, i18n } = useTranslation();
   const [open, setOpen] = useState<boolean>(false);
+  const [username, setUsername] = useState<string | undefined>("");
+  const [password, setPassword] = useState<string | undefined>("");
+  const [active, setActive] = useState<string>(
+    localStorage.getItem("preferred_locale") || "vn"
+  );
   useEffect(() => {
     async function fetchData() {
       const token = getCookie("token");
@@ -48,22 +68,25 @@ const Login: React.FC = () => {
     }
     fetchData();
   }, []);
-  const [username, setUsername] = useState<string | undefined>("");
-  const [password, setPassword] = useState<string | undefined>("");
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    const { username, password } = values;
+    console.log(values);
+    const { username, password, remember } = values;
     LoginSample(username, password).then((response) => {
       console.log(response);
-      if (response?.token) {
-        // localStorage.setItem("token", JSON.stringify(response?.token));
-        setCookie("token", JSON.stringify(response?.token), { maxAge: 10});
-        localStorage.setItem("user", JSON.stringify(response));
-      }
       if (response) {
-        ShowToast("success", "Login successful!! ");
+        if (remember) {
+          setCookie("token", JSON.stringify(response.token), {
+            maxAge: 60 * 10,
+          });
+        } else {
+          setCookie("token", JSON.stringify(response.token));
+        }
+        // localStorage.setItem("user", JSON.stringify(response));
+        dispatch(setUserLogin(response));
+        ShowToast("success", t("successLogin"));
         router.push("/dashboard", { scroll: false });
       } else {
-        ShowToast("error", "Email or Password do not correct");
+        ShowToast("error", t("errorLogin"));
       }
       return response;
     });
@@ -72,7 +95,13 @@ const Login: React.FC = () => {
     errorInfo
   ) => {
     console.log("Failed:", errorInfo);
-    ShowToast("error", "Email or Password do not correct");
+    ShowToast("error", t("errorLogin"));
+  };
+
+  const handleTrans = (code: string) => {
+    localStorage.setItem("preferred_locale", JSON.stringify(code));
+    setActive(code);
+    i18n?.changeLanguage(code);
   };
   return !open ? null : (
     <Container className="container">
@@ -96,7 +125,6 @@ const Login: React.FC = () => {
           <ImageCamera alt="Camera" src={camera} sizes="9rem" />
         </CircleCamera>
         <FormLogin
-          name="basic"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}
           initialValues={{ remember: true }}
@@ -105,9 +133,9 @@ const Login: React.FC = () => {
           autoComplete="off"
           className="form__styles"
         >
-          <Form.Item<FieldType>
+          <FormLogin.Item<FieldType>
             name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            rules={[{ required: true, message: t("requireUsername") }]}
           >
             <ContainInput>
               <ImagePersonal
@@ -116,7 +144,7 @@ const Login: React.FC = () => {
                 // sizes="9rem"
               />
               <InputForm
-                placeholder="Username"
+                placeholder={t("username")}
                 name="username"
                 defaultValue={username}
                 onChange={(e) => {
@@ -124,11 +152,11 @@ const Login: React.FC = () => {
                 }}
               />
             </ContainInput>
-          </Form.Item>
+          </FormLogin.Item>
 
           <Form.Item<FieldType>
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[{ required: true, message: t("requirePassword") }]}
           >
             <ContainInput>
               <ImagePassword
@@ -137,8 +165,8 @@ const Login: React.FC = () => {
                 // sizes="9rem"
               />
               <InputFormPassword
-                placeholder="Password"
-                name="username"
+                placeholder={t("password")}
+                name="password"
                 defaultValue={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -152,19 +180,36 @@ const Login: React.FC = () => {
             valuePropName="checked"
             wrapperCol={{ offset: 8, span: 16 }}
           >
-            <CheckboxLogin className="remember__me">Remember me</CheckboxLogin>
+            <CheckboxLogin className="remember__me">
+              {t("rememberMe")}
+            </CheckboxLogin>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <ButtonLogin type="primary" htmlType="submit">
-              {/* <Link href="/dashboard"> */}
-              LOGIN
-              {/* </Link> */}
+              {t("login")}
             </ButtonLogin>
           </Form.Item>
         </FormLogin>
       </ContainerForm>
       <ToastContainer />
+      <SwitchLanguage>
+        {lngs.map((lng, i) => {
+          return (
+            <ButtonLanguage
+              className={
+                JSON.parse(localStorage.getItem("preferred_locale") || "vn") ==
+                lng.code
+                  ? "active-language"
+                  : ""
+              }
+              onClick={() => handleTrans(lng.code)}
+            >
+              {lng.native}
+            </ButtonLanguage>
+          );
+        })}
+      </SwitchLanguage>
     </Container>
   );
 };

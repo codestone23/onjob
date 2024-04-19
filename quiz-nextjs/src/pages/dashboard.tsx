@@ -39,20 +39,21 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import { User, Question } from "@/data/contants";
 import { questions } from "@/data/contants";
-import { Select } from "antd";
 import { getCurrentUser } from "@/pages/api/user/user.service";
 import { UserLogin } from "@/types/user";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserLogin, setUserLogin } from "@/stores/slices/account";
+import { AppState } from "@/stores/store";
 
 const Dashboard: React.FC = () => {
-  const [user, setUser] = useState<UserLogin | undefined>();
+  const user = useSelector((state: AppState) => state.account.user);
+  console.log(user);
   const [pending, setPending] = useState<boolean>(true);
-
   useEffect(() => {
     async function fetchData() {
       try {
         const data: UserLogin | undefined = await getCurrentUser();
-        console.log(data);
-        setUser(data);
+        dispatch(setUserLogin(data));
       } catch (error) {
         console.error("Error:", error);
       } finally {
@@ -61,6 +62,7 @@ const Dashboard: React.FC = () => {
     }
     fetchData();
   }, []);
+  const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
   const [listQuestion, setListQuestion] = useState<Question[]>(questions);
@@ -107,14 +109,12 @@ const Dashboard: React.FC = () => {
   }, [textSearch, selectItem, searchParams]);
 
   useEffect(() => {
-    console.log("2");
     const updatedListQuestion = totalQuestion.slice(
       (pageNumber - 1) * pageSize,
       pageNumber * pageSize
     );
     setListQuestion(updatedListQuestion);
   }, [totalQuestion, pageNumber, searchParams]);
-  console.log("3");
   const showDrawer = () => {
     setOpen(true);
   };

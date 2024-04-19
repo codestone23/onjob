@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserLogin } from "../../../types/user";
+import { UserLogin, UserResponse } from "../../../types/user";
 import { axiosInstance } from "../axios";
 
 const API_URL = "https://dummyjson.com/auth/";
@@ -9,7 +9,7 @@ export async function LoginSample(
   password: string | undefined
 ) {
   try {
-    const response = await axios.post<UserLogin>(
+    const response = await axios.post<UserResponse>(
       `${API_URL}login`,
       {
         username: email,

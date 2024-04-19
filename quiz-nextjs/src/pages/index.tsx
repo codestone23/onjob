@@ -6,15 +6,14 @@ import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { getCurrentUser, refreshToken } from "./api/user/user.service";
 import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
+import "../config/i18n";
 
 export default function Home(props: any) {
   const router = useRouter();
-
   useEffect(() => {
     async function fetchData() {
       try {
         const token = getCookie("token");
-        console.log("vao duoc roi nay");
         if (token) {
           router.push("/dashboard", { scroll: false });
         } else {

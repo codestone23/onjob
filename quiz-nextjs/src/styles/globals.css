@@ -143,6 +143,9 @@ a {
   background-color: #d9d9d9;
   border: none;
 }
+.container .active-language {
+  background-color: #66ff66;
+}
 
 @media (max-width: 600px) {
   .container .ant-form-item {
@@ -154,4 +157,7 @@ a {
     display: flex;
     justify-content: flex-start;
   }
+  /* .ant-drawer-body{
+    background-color: #d9d9d9;
+  } */
 }

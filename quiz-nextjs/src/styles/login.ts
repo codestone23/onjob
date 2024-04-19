@@ -243,4 +243,27 @@ export const ImagePassword = styled(Image)`
   }
 `;
 
-// npm install "module_name"
+export const SwitchLanguage = styled.div`
+  /* position: absolute; */
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+  padding: 0;
+  padding-top:3rem ;
+  text-align: center;
+  align-items: center;
+  margin: 0 auto;
+  
+
+
+
+
+`;
+
+export const ButtonLanguage = styled.button`
+  background-color: #d9d9d9;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+
+`;
