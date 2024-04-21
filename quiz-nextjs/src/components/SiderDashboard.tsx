@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import avatar from "../assets/images/avatar.jpg";
-import Image from "next/image";
+// import Image from "next/image";
 import {
   SiderStyles,
   ImageAvatar,
@@ -11,42 +11,38 @@ import {
   CloudUploadOutlinedStyles,
 } from "@/styles/dashboard";
 import { useRouter } from "next/navigation";
-import { User } from "@/data/contants";
 import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
 import { UserLogin } from "@/types/user";
 import { useSelector, useDispatch } from "react-redux";
-import { EditOutlined } from "@ant-design/icons";
-import { AppState } from "@/stores/store";
 import { setUserLogin } from "@/stores/slices/account";
-import { Upload } from "antd";
 import type { GetProp, UploadFile, UploadProps } from "antd";
-import ImgCrop from "antd-img-crop";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { Flex, message, Upload } from "antd";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 interface Props {
   user?: UserLogin;
 }
 
-const SiderDashboard: React.FC<Props> = ({ user }) => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-  };
+const getBase64 = (img: FileType, callback: (url: string) => void) => {
+  const reader = new FileReader();
+  reader.addEventListener("load", () => callback(reader.result as string));
+  reader.readAsDataURL(img);
+};
 
-  const onPreview = async (file: UploadFile) => {
-    let src = file.url as string;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj as FileType);
-        reader.onload = () => resolve(reader.result as string);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
+const beforeUpload = (file: FileType) => {
+  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/jpg";
+  if (!isJpgOrPng) {
+    message.error("You can only upload JPG/PNG file!");
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error("Image must smaller than 2MB!");
+  }
+  return isJpgOrPng && isLt2M;
+};
+
+const SiderDashboard: React.FC<Props> = ({ user }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [openEdit, setOpenEdit] = useState<boolean>(false);
@@ -62,6 +58,28 @@ const SiderDashboard: React.FC<Props> = ({ user }) => {
     setOpenEdit(!openEdit);
   };
   console.log(user);
+  const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>();
+  const handleChange: UploadProps["onChange"] = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      console.log("okela");
+      getBase64(info.file.originFileObj as FileType, (url) => {
+        setLoading(false);
+        setImageUrl(url);
+      });
+    }
+  };
+
+  const uploadButton = (
+    <button style={{ border: 0, background: "none" }} type="button">
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </button>
+  );
   return !openEdit ? (
     <SiderStyles>
       <ImageAvatar
@@ -90,17 +108,23 @@ const SiderDashboard: React.FC<Props> = ({ user }) => {
           alt="Avatar"
         />
         <CloudUploadOutlinedStyles />
-        <ImgCrop rotationSlider>
+        <Flex gap="middle" wrap="wrap">
           <Upload
-            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+            name="avatar"
             listType="picture-circle"
-            fileList={fileList}
-            onChange={onChange}
-            onPreview={onPreview}
+            className="avatar-uploader"
+            showUploadList={false}
+            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+            beforeUpload={beforeUpload}
+            onChange={handleChange}
           >
-            {fileList.length < 5 && "+ Upload"}
+            {imageUrl ? (
+              <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+            ) : (
+              uploadButton
+            )}
           </Upload>
-        </ImgCrop>
+        </Flex>
       </ContainImage>
 
       <TextProfile>Username: {user?.username}</TextProfile>

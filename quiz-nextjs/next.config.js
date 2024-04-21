@@ -16,6 +16,14 @@ const nextConfig = {
     styledComponents: true,
   },
   images: { domains: ['robohash.org'] },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://660d2bd96ddfa2943b33731c.mockapi.io/:path*',
+      },
+    ]
+  },
 };
 
 module.exports = nextConfig;
