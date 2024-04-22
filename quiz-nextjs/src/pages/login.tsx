@@ -17,7 +17,7 @@ import {
   SwitchLanguage,
 } from "@/styles/login";
 import { Form, type FormProps } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import background from "../assets/images/background.jpg";
 import background2 from "../assets/images/background2.svg";
 import { ToastContainer } from "react-toastify";
@@ -33,6 +33,8 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
 import { setUserLogin, getUserLogin } from "@/stores/slices/account";
 import { UserLogin } from "@/types/user";
+import z from "zod";
+import { createSchemaFieldRule } from "antd-zod";
 
 type FieldType = {
   username?: string;
@@ -44,6 +46,24 @@ const lngs = [
   { code: "en", native: "English" },
   { code: "vn", native: "Vietnamese" },
 ];
+
+const CustomFormValidationSchema = z.object({
+  username: z.string().min(3).describe("Username"),
+  password: z
+    .string()
+    .refine(
+      (val) =>
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/.test(
+          val
+        ),
+      {
+        message:
+          "Password must be at least 8 characters long and contain at least one uppercase character, one lowercase character, and one special symbol",
+      }
+    ),
+});
+
+const rule = createSchemaFieldRule(CustomFormValidationSchema);
 
 const Login: React.FC = () => {
   const itemsInAccount: UserLogin | undefined = useSelector(getUserLogin);
@@ -103,6 +123,7 @@ const Login: React.FC = () => {
     setActive(code);
     i18n?.changeLanguage(code);
   };
+
   return !open ? null : (
     <Container className="container">
       <ImageBackground
@@ -133,10 +154,7 @@ const Login: React.FC = () => {
           autoComplete="off"
           className="form__styles"
         >
-          <FormLogin.Item<FieldType>
-            name="username"
-            rules={[{ required: true, message: t("requireUsername") }]}
-          >
+          <FormLogin.Item<FieldType> name="username" rules={[rule]}>
             <ContainInput>
               <ImagePersonal
                 alt="Camera"
@@ -156,14 +174,20 @@ const Login: React.FC = () => {
 
           <Form.Item<FieldType>
             name="password"
-            rules={[{ required: true, message: t("requirePassword") }]}
+            rules={[
+              {
+                required: true,
+                message: "required!!",
+              },
+              {
+                pattern: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/,
+                // message: "Password must be at least 8 characters long and contain at least one uppercase character, one lowercase character",
+                message: "Password is not in correct format",
+              },
+            ]}
           >
             <ContainInput>
-              <ImagePassword
-                alt="Camera"
-                src={pass}
-                // sizes="9rem"
-              />
+              <ImagePassword alt="Camera" src={pass} />
               <InputFormPassword
                 placeholder={t("password")}
                 name="password"

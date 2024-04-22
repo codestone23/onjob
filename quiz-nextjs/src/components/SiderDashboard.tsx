@@ -18,6 +18,7 @@ import { setUserLogin } from "@/stores/slices/account";
 import type { GetProp, UploadFile, UploadProps } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { Flex, message, Upload } from "antd";
+import { useTranslation } from "react-i18next";
 
 type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 interface Props {
@@ -43,6 +44,7 @@ const beforeUpload = (file: FileType) => {
 };
 
 const SiderDashboard: React.FC<Props> = ({ user }) => {
+  const { t, i18n } = useTranslation();
   const router = useRouter();
   const dispatch = useDispatch();
   const [openEdit, setOpenEdit] = useState<boolean>(false);
@@ -77,7 +79,7 @@ const SiderDashboard: React.FC<Props> = ({ user }) => {
   const uploadButton = (
     <button style={{ border: 0, background: "none" }} type="button">
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>{t("upload")}</div>
     </button>
   );
   return !openEdit ? (
@@ -88,14 +90,14 @@ const SiderDashboard: React.FC<Props> = ({ user }) => {
         height={120}
         alt="Avatar"
       />
-      <TextProfile>Username: {user?.username}</TextProfile>
-      <TextProfile>FirstName: {user?.firstName}</TextProfile>
-      <TextProfile>LastName: {user?.lastName}</TextProfile>
+      <TextProfile>{t("username")}: {user?.username}</TextProfile>
+      <TextProfile>{t("firstName")}: {user?.firstName}</TextProfile>
+      <TextProfile>{t("lastName")}: {user?.lastName}</TextProfile>
       <TextProfile>Email: {user?.email}</TextProfile>
-      <TextProfile>Gender: {user?.gender}</TextProfile>
+      <TextProfile>{t("gender")}: {user?.gender === "male" ? t("male") : t("female")}</TextProfile>
       <ButtonDashboard>
-        <ButtonLogout onClick={logout}>Logout</ButtonLogout>
-        <ButtonLogout onClick={editProfile}>Edit profile</ButtonLogout>
+        <ButtonLogout onClick={logout}>{t("logout")}</ButtonLogout>
+        <ButtonLogout onClick={editProfile}>{t("editProfile")}</ButtonLogout>
       </ButtonDashboard>
     </SiderStyles>
   ) : (

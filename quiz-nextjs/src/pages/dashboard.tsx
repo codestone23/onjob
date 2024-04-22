@@ -44,9 +44,11 @@ import { UserLogin } from "@/types/user";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserLogin, setUserLogin } from "@/stores/slices/account";
 import { AppState } from "@/stores/store";
+import { useTranslation } from "react-i18next";
 
 const Dashboard: React.FC = () => {
   const user = useSelector((state: AppState) => state.account.user);
+  const { t, i18n } = useTranslation();
   console.log(user);
   const [pending, setPending] = useState<boolean>(true);
   useEffect(() => {
@@ -153,7 +155,7 @@ const Dashboard: React.FC = () => {
               alt="Clock"
               onClick={showDrawer}
             />
-            Dashboard
+           {t("dashboard")}
           </HeaderMobile>
           <HeaderDashboard>
             <HeaderItemLeft>
@@ -171,7 +173,7 @@ const Dashboard: React.FC = () => {
                   );
                 }}
                 alt="search"
-                placeholder="Search"
+                placeholder={t("search")}
               />
               <SearchContain>
                 <IconSearch />
@@ -186,7 +188,7 @@ const Dashboard: React.FC = () => {
                     value: "0",
                     label: (
                       <DifficultQuestion>
-                        Tất cả
+                        {t("allDifficult")}
                         <ImageSelect
                           src={star2}
                           width={30}
@@ -200,7 +202,7 @@ const Dashboard: React.FC = () => {
                     value: "1",
                     label: (
                       <DifficultQuestion>
-                        Độ khó 1{" "}
+                        {t("oneDifficult")}{" "}
                         <ImageSelect
                           src={star2}
                           width={30}
@@ -214,7 +216,7 @@ const Dashboard: React.FC = () => {
                     value: "2",
                     label: (
                       <DifficultQuestion>
-                        Độ khó 2{" "}
+                        {t("twoDifficult")}{" "}
                         <ImageSelect
                           src={star2}
                           width={30}
@@ -228,7 +230,7 @@ const Dashboard: React.FC = () => {
                     value: "3",
                     label: (
                       <DifficultQuestion>
-                        Độ khó 3{" "}
+                        {t("threeDifficult")}{" "}
                         <ImageSelect
                           src={star2}
                           width={30}
@@ -242,7 +244,7 @@ const Dashboard: React.FC = () => {
                     value: "4",
                     label: (
                       <DifficultQuestion>
-                        Độ khó 4{" "}
+                        {t("fourDifficult")}{" "}
                         <ImageSelect
                           src={star2}
                           width={30}
@@ -256,7 +258,7 @@ const Dashboard: React.FC = () => {
                     value: "5",
                     label: (
                       <DifficultQuestion>
-                        Độ khó 5{" "}
+                        {t("fiveDifficult")}{" "}
                         <ImageSelect
                           src={star2}
                           width={30}
@@ -293,7 +295,7 @@ const Dashboard: React.FC = () => {
                           height={30}
                           alt="Clock"
                         />
-                        <div>{question.time} phút</div>
+                        <div>{question.time} {t("minutes")}</div>
                       </DescriptionItemSmall>
                       <DescriptionItemSmall>
                         <ImageExam
@@ -302,7 +304,7 @@ const Dashboard: React.FC = () => {
                           height={30}
                           alt="Achive"
                         />
-                        <div>{question.points}/250 điểm</div>
+                        <div>{question.points}/250 {t("points")}</div>
                       </DescriptionItemSmall>
                     </DescriptionItem>
                     <ListStar>
