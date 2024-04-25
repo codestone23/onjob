@@ -31,7 +31,7 @@ export async function LoginSample(
 
 export async function getCurrentUser() {
   try {
-    const response = await axiosInstance.get<UserLogin>("/me");
+    const response = await axiosInstance.get<UserLogin>("/auth/me");
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -42,11 +42,22 @@ export async function getCurrentUser() {
 
 export async function refreshToken() {
   try {
-    const response = await axiosInstance.post("refresh",
+    const response = await axiosInstance.post("/auth/refresh",
       {
         expiresInMins: 30,
       }
     );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}
+
+export async function getProducts() {
+  try{
+    const response = await axiosInstance.get("/products");
     console.log(response.data);
     return response.data;
   } catch (error) {

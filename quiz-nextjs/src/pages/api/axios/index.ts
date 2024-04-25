@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
 
-const API_URL = "https://dummyjson.com/auth/";
+const API_URL = "https://dummyjson.com/";
 
 export const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_URL,
@@ -10,6 +10,7 @@ export const axiosInstance: AxiosInstance = axios.create({
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
   },
+  timeout: 2000, 
 });
 
 axiosInstance.interceptors.request.use(

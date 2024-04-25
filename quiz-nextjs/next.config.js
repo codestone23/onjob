@@ -1,3 +1,5 @@
+const { i18n } = require("./next-i18next.config");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -15,15 +17,16 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  images: { domains: ['robohash.org'] },
+  images: { domains: ["robohash.org"] },
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: 'https://660d2bd96ddfa2943b33731c.mockapi.io/:path*',
+        source: "/api/:path*",
+        destination: "https://660d2bd96ddfa2943b33731c.mockapi.io/:path*",
       },
-    ]
+    ];
   },
+  i18n,
 };
 
 module.exports = nextConfig;

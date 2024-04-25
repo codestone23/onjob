@@ -23,7 +23,7 @@ import background2 from "../assets/images/background2.svg";
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import camera from "../assets/images/camera.svg";
-import pass from "../assets/images/password.svg";
+import passImage from "../assets/images/password.svg";
 import personal from "../assets/images/personal.svg";
 import { ShowToast } from "@/components/notify/ShowToast";
 import "react-toastify/dist/ReactToastify.css";
@@ -35,6 +35,12 @@ import { setUserLogin, getUserLogin } from "@/stores/slices/account";
 import { UserLogin } from "@/types/user";
 import z from "zod";
 import { createSchemaFieldRule } from "antd-zod";
+import Link from "next/link";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next';
+import { GetStaticPropsContext } from 'next';
+import { useQuery, useMutation } from 'react-query';
+
 
 type FieldType = {
   username?: string;
@@ -67,13 +73,17 @@ const rule = createSchemaFieldRule(CustomFormValidationSchema);
 
 const Login: React.FC = () => {
   const itemsInAccount: UserLogin | undefined = useSelector(getUserLogin);
-  console.log(itemsInAccount);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common');
   const [open, setOpen] = useState<boolean>(false);
-  const [username, setUsername] = useState<string | undefined>("");
-  const [password, setPassword] = useState<string | undefined>("");
+  const user: string | undefined = hasCookie("username")
+    ? JSON.parse(getCookie("username") || "")
+    : "";
+  const pass: string | undefined = hasCookie("password")
+    ? JSON.parse(getCookie("password") || "")
+    : "";
+  console.log({ user, pass });
   const [active, setActive] = useState<string>(
     localStorage.getItem("preferred_locale") || "vn"
   );
@@ -85,21 +95,33 @@ const Login: React.FC = () => {
       } else {
         setOpen(true);
       }
+      const preferredLocale = localStorage.getItem("preferred_locale") || "vn";
+      // i18n.changeLanguage(preferredLocale);
     }
+
     fetchData();
   }, []);
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+  const onFinish: FormProps<FieldType>["onFinish"] = (values : FieldType) => {
     console.log(values);
     const { username, password, remember } = values;
+    
     LoginSample(username, password).then((response) => {
       console.log(response);
       if (response) {
         if (remember) {
           setCookie("token", JSON.stringify(response.token), {
-            maxAge: 60 * 10,
+            maxAge: 60 * 60 * 10,
+          });
+          setCookie("username", JSON.stringify(response.username), {
+            maxAge: 60 * 60 * 60 * 10,
+          });
+          setCookie("password", JSON.stringify(password), {
+            maxAge: 60 * 60 * 60 * 10,
           });
         } else {
           setCookie("token", JSON.stringify(response.token));
+          deleteCookie("username");
+          deleteCookie("password");
         }
         // localStorage.setItem("user", JSON.stringify(response));
         dispatch(setUserLogin(response));
@@ -121,7 +143,7 @@ const Login: React.FC = () => {
   const handleTrans = (code: string) => {
     localStorage.setItem("preferred_locale", JSON.stringify(code));
     setActive(code);
-    i18n?.changeLanguage(code);
+    // i18n.changeLanguage(code);
   };
 
   return !open ? null : (
@@ -154,7 +176,11 @@ const Login: React.FC = () => {
           autoComplete="off"
           className="form__styles"
         >
-          <FormLogin.Item<FieldType> name="username" rules={[rule]}>
+          <Form.Item<FieldType>
+            name="username"
+            initialValue={user}
+            rules={[rule]}
+          >
             <ContainInput>
               <ImagePersonal
                 alt="Camera"
@@ -162,18 +188,19 @@ const Login: React.FC = () => {
                 // sizes="9rem"
               />
               <InputForm
-                placeholder={t("username")}
+                placeholder={t('username')}
                 name="username"
-                defaultValue={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
+                defaultValue={user}
+                // onChange={(e) => {
+                //   setUsername(e.target.value);
+                // }}
               />
             </ContainInput>
-          </FormLogin.Item>
+          </Form.Item>
 
           <Form.Item<FieldType>
             name="password"
+            initialValue={pass}
             rules={[
               {
                 required: true,
@@ -187,14 +214,14 @@ const Login: React.FC = () => {
             ]}
           >
             <ContainInput>
-              <ImagePassword alt="Camera" src={pass} />
+              <ImagePassword alt="Camera" src={passImage} />
               <InputFormPassword
                 placeholder={t("password")}
                 name="password"
-                defaultValue={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
+                defaultValue={pass}
+                // onChange={(e) => {
+                //   setPassword(e.target.value);
+                // }}
               />
             </ContainInput>
           </Form.Item>
@@ -220,17 +247,21 @@ const Login: React.FC = () => {
       <SwitchLanguage>
         {lngs.map((lng, i) => {
           return (
-            <ButtonLanguage
-              className={
-                JSON.parse(localStorage.getItem("preferred_locale") || "vn") ==
-                lng.code
-                  ? "active-language"
-                  : ""
-              }
-              onClick={() => handleTrans(lng.code)}
-            >
-              {lng.native}
-            </ButtonLanguage>
+            <Link href="/login" locale={lng.code} key={i}>
+              <ButtonLanguage
+                key={i}
+                className={
+                  JSON.parse(
+                    localStorage.getItem("preferred_locale") || "vn"
+                  ) == lng.code
+                    ? "active-language"
+                    : ""
+                }
+                onClick={() => handleTrans(lng.code)}
+              >
+                {lng.native}
+              </ButtonLanguage>
+            </Link>
           );
         })}
       </SwitchLanguage>
@@ -239,3 +270,13 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+export const getStaticProps = async (context: GetStaticPropsContext<{ locale: string | undefined }>) => {
+  const locale = context.locale || 'vn'; 
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
+};

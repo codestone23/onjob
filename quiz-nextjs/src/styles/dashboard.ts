@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import Image from "next/image";
 import { CaretDownOutlined, CloudUploadOutlined, SearchOutlined } from "@ant-design/icons";
-import { Col, Select } from "antd";
+import { Button, Col, Select } from "antd";
 import { Pagination, Drawer, Row } from "antd";
 import { device } from "./breakpoints";
 import { EditOutlined } from "@ant-design/icons";
+import { Flex, message, Upload } from "antd";
+import  { Image as ImageAntd } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -49,7 +51,7 @@ export const TextProfile = styled.div`
   margin-bottom: .5rem;
 `;
 
-export const ButtonLogout = styled.div`
+export const ButtonLogout = styled(Button)`
   /* position: absolute; */
   bottom: 2rem;
   background: #c9cbcb;
@@ -250,6 +252,16 @@ export const ButtonDashboard = styled.div`
   }
 `;
 
+export const ButtonDashboardFix = styled.div`
+display: flex;
+  justify-content: space-around;
+  height: 25vh;
+  align-items: flex-end;
+  @media ${device.md} {
+    height: 50vh;
+  }
+`;
+
 export const SiderPC = styled.div`
   background: #d9d9d9;
   @media ${device.md} {
@@ -312,5 +324,52 @@ export const ContainImage = styled.div`
   position: relative;
   width: fit-content;
   margin: auto;
+  & .ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload-list.ant-upload-list-picture-circle .ant-upload-list-item-container{
+    width: 100%;
+    height: 100%;
+  }
+  & .ant-upload-wrapper .ant-upload-list.ant-upload-list-picture-circle .ant-upload-list-item{
+    padding: 0;
+    border: 1px solid #000;
+  }
+  & .ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload-list.ant-upload-list-picture-circle .ant-upload-list-item::before{
+    width: 100%;
+    height: 100%;
+  }
+
+`;
+
+
+export const UploadImage = styled(Upload)`
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.ant-upload-wrapper.ant-upload-picture-circle-wrapper{
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  &.ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload-list.ant-upload-list-picture-circle {
+    height: 100%;
+    width: 100%;
+  }
+  &.ant-upload-wrapper.ant-upload-picture-circle-wrapper .ant-upload.ant-upload-select{
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+export const ImageUpload = styled(ImageAntd)`
+  text-align: center;
+  width: 100%;
+  height: 100%;
+
+
 
 `;

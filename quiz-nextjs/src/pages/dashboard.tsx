@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Pagination, Drawer, Row } from "antd";
 import { Alert, Flex, Spin } from "antd";
-import Image from "next/image";
 import {
   Container,
   BodyStyles,
@@ -39,31 +38,41 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import { User, Question } from "@/data/contants";
 import { questions } from "@/data/contants";
-import { getCurrentUser } from "@/pages/api/user/user.service";
+import { getCurrentUser, getProducts, refreshToken } from "@/pages/api/user/user.service";
 import { UserLogin } from "@/types/user";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserLogin, setUserLogin } from "@/stores/slices/account";
 import { AppState } from "@/stores/store";
 import { useTranslation } from "react-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+import { GetStaticPropsContext } from "next";
+import { useQuery, useMutation } from "react-query";
+import { setCookie, getCookie, deleteCookie, hasCookie } from "cookies-next";
+import { jwtDecode } from "jwt-decode";
+import { setUserLogin } from "@/stores/slices/account";
+import { differenceInHours } from "date-fns";
 
 const Dashboard: React.FC = () => {
+  const { data, isLoading, error } = useQuery("getProducts", getProducts);
+  console.log({ data, isLoading, error });
   const user = useSelector((state: AppState) => state.account.user);
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("common");
   console.log(user);
   const [pending, setPending] = useState<boolean>(true);
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data: UserLogin | undefined = await getCurrentUser();
-        dispatch(setUserLogin(data));
-      } catch (error) {
-        console.error("Error:", error);
-      } finally {
-        setPending(false);
-      }
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const data: UserLogin | undefined = await getCurrentUser();
+  //       console.log(data);
+  //       // dispatch(setUserLogin(data));
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     } finally {
+  //       setPending(false);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
@@ -82,8 +91,9 @@ const Dashboard: React.FC = () => {
     searchParams.get("item") || "0"
   );
   const router = useRouter();
-  const handleChange = (value: string) => {
-    setSelectItem(value);
+  const handleChange = (value: string | number) => {
+    const selectedValue = typeof value === "number" ? value.toString() : value;
+    console.log(textSearch);
     router.push(
       `/dashboard?pageIndex=${1}&item=${value}&search=${textSearch}`,
       { scroll: false }
@@ -92,6 +102,8 @@ const Dashboard: React.FC = () => {
   };
   useEffect(() => {
     console.log("1");
+    setTextSearch(searchParams.get("search") || "");
+    setSelectItem(searchParams.get("item") || "0");
     if (searchParams.get("item") == "0" || !searchParams.get("item")) {
       setTotalQuestion(
         questions.filter((e) =>
@@ -125,7 +137,46 @@ const Dashboard: React.FC = () => {
     setOpen(false);
   };
   console.log(pending);
-  return pending ? (
+  console.log(textSearch);
+  // const token: string = JSON.parse(getCookie("token") || "");
+  // const decoded = jwtDecode(token);
+  // if (decoded && decoded.exp) {
+  //   const expiresAt = new Date(decoded.exp * 1000);
+  //   console.log(expiresAt);
+  // } else {
+  //   console.log("Token or expiration time not found");
+  // }
+  // useEffect(() => {
+    // const interval = setInterval(async () => {
+      const now = Date.now();
+      const token: string = JSON.parse(getCookie("token") || "");
+      const decoded = jwtDecode(token);
+      if (decoded && decoded.exp) {
+        const expiresAt = new Date(decoded.exp * 1000).getTime();
+        console.log(expiresAt);
+        console.log(now);
+        console.log(differenceInHours(expiresAt, now));
+        // if (differenceInHours(expiresAt, now) < 1) {
+        //   refreshToken().then((response) => {
+        //     console.log(response);
+        //     if (response) {
+        //       setCookie("token", JSON.stringify(response.token), {
+        //         maxAge: 60 * 60 * 10,
+        //       });
+        //       dispatch(setUserLogin(response));
+        //       router.push("/dashboard", { scroll: false });
+        //     }
+        //     return response;
+        //   });
+        // }
+      } else {
+        console.log("Token or expiration time not found");
+      }
+    // }, 1000 * 60 * 25);
+    // return () => clearInterval(interval);
+  // }, []);
+
+  return pending && isLoading ? (
     <DisplaySpin>
       <Flex align="center" gap="middle">
         <Spin size="large" />
@@ -155,7 +206,7 @@ const Dashboard: React.FC = () => {
               alt="Clock"
               onClick={showDrawer}
             />
-           {t("dashboard")}
+            {t("dashboard")}
           </HeaderMobile>
           <HeaderDashboard>
             <HeaderItemLeft>
@@ -295,7 +346,9 @@ const Dashboard: React.FC = () => {
                           height={30}
                           alt="Clock"
                         />
-                        <div>{question.time} {t("minutes")}</div>
+                        <div>
+                          {question.time} {t("minutes")}
+                        </div>
                       </DescriptionItemSmall>
                       <DescriptionItemSmall>
                         <ImageExam
@@ -304,7 +357,9 @@ const Dashboard: React.FC = () => {
                           height={30}
                           alt="Achive"
                         />
-                        <div>{question.points}/250 {t("points")}</div>
+                        <div>
+                          {question.points}/250 {t("points")}
+                        </div>
                       </DescriptionItemSmall>
                     </DescriptionItem>
                     <ListStar>
@@ -360,3 +415,15 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ locale: string | undefined }>
+) => {
+  const locale = context.locale || "vn";
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+};

@@ -23,17 +23,12 @@ import {
   ColStyles,
   DifficultQuestion,
 } from "@/styles/dashboard";
-import achive from "@/assets/images/achive.svg";
-import clock from "@/assets/images/clock.svg";
-import star1 from "@/assets/images/star1.svg";
-import star2 from "@/assets/images/star2.svg";
 import SiderDashboard from "@/components/SiderDashboard";
 import tab from "@/assets/images/tab.jpg";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import { User, Question } from "@/data/contants";
 import { users } from "@/data/contants";
-import { Select } from "antd";
 import { getCurrentUser } from "@/pages/api/user/user.service";
 import SiderManager from "../components/SiderManager";
 import {
