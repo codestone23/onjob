@@ -1,6 +1,7 @@
 import axios from "axios";
 import { UserLogin, UserResponse } from "../../../types/user";
 import { axiosInstance } from "../axios";
+import { getCookie } from "cookies-next";
 
 const API_URL = "https://dummyjson.com/auth/";
 
@@ -41,10 +42,16 @@ export async function getCurrentUser() {
 }
 
 export async function refreshToken() {
+  const token: string = JSON.parse(getCookie("token") || "");
   try {
-    const response = await axiosInstance.post("/auth/refresh",
+    const response = await axios.post(`${API_URL}refresh`,
       {
         expiresInMins: 30,
+      },{
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`, 
+        },
       }
     );
     console.log(response.data);

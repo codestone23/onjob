@@ -44,7 +44,7 @@ import addcolor from "../assets/images/addcolor.png";
 import change from "../assets/images/change.png";
 import trash from "../assets/images/trash.png";
 
-const Dashboard: React.FC = () => {
+const UserManager: React.FC = () => {
   const [user, setUser] = useState<User | Object>({});
 
   useEffect(() => {
@@ -216,4 +216,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default UserManager;

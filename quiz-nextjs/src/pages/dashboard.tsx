@@ -148,30 +148,32 @@ const Dashboard: React.FC = () => {
   // }
   // useEffect(() => {
     // const interval = setInterval(async () => {
-      const now = Date.now();
-      const token: string = JSON.parse(getCookie("token") || "");
-      const decoded = jwtDecode(token);
-      if (decoded && decoded.exp) {
-        const expiresAt = new Date(decoded.exp * 1000).getTime();
-        console.log(expiresAt);
-        console.log(now);
-        console.log(differenceInHours(expiresAt, now));
-        // if (differenceInHours(expiresAt, now) < 1) {
-        //   refreshToken().then((response) => {
-        //     console.log(response);
-        //     if (response) {
-        //       setCookie("token", JSON.stringify(response.token), {
-        //         maxAge: 60 * 60 * 10,
-        //       });
-        //       dispatch(setUserLogin(response));
-        //       router.push("/dashboard", { scroll: false });
-        //     }
-        //     return response;
-        //   });
-        // }
-      } else {
-        console.log("Token or expiration time not found");
-      }
+      // const now = Date.now();
+      // const token: string = JSON.parse(getCookie("token") || "");
+      // const decoded = jwtDecode(token);
+      // if (decoded && decoded.exp) {
+      //   const expiresAt = new Date(decoded.exp * 1000).getTime();
+      //   console.log(expiresAt);
+      //   console.log(now);
+      //   console.log(differenceInHours(expiresAt, now));
+      //   const date = new Date(expiresAt - now).getTime();
+      //   console.log(date / ( 1000 * 60));
+      //   if (date < 5) {
+      //     refreshToken().then((response) => {
+      //       console.log(response);
+      //       if (response) {
+      //         setCookie("token", JSON.stringify(response.token), {
+      //           maxAge: 60 * 60 * 10,
+      //         });
+      //         dispatch(setUserLogin(response));
+      //         router.push("/dashboard", { scroll: false });
+      //       }
+      //       return response;
+      //     });
+      //   }
+      // } else {
+      //   console.log("Token or expiration time not found");
+      // }
     // }, 1000 * 60 * 25);
     // return () => clearInterval(interval);
   // }, []);

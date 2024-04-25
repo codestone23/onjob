@@ -41,8 +41,13 @@ export default function Home(props: any) {
       const token: string = JSON.parse(getCookie("token") || "");
       const decoded = jwtDecode(token);
       if (decoded && decoded.exp) {
-        const expiresAt = new Date(decoded.exp * 1000);
-        if (differenceInHours(expiresAt, now) < 1) {
+        const expiresAt = new Date(decoded.exp * 1000).getTime();
+        console.log(expiresAt);
+        console.log(now);
+        console.log(differenceInHours(expiresAt, now));
+        const date = new Date(expiresAt - now).getTime();
+        console.log(date / ( 1000 * 60));
+        if (date < 5) {
           refreshToken().then((response) => {
             console.log(response);
             if (response) {
@@ -55,11 +60,10 @@ export default function Home(props: any) {
             return response;
           });
         }
-        console.log(expiresAt);
       } else {
         console.log("Token or expiration time not found");
       }
-    }, 1000 * 60 * 25);
+    }, 1000 * 60 * 4);
     return () => clearInterval(interval);
   }, []);
 

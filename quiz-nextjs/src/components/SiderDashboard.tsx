@@ -116,7 +116,7 @@ const SiderDashboard: React.FC<Props> = ({ user }) => {
     console.log(values);
     const { email, username, firstName, lastName, gender } = values;
     if (fileList[0]?.thumbUrl) {
-      console.log(fileList[0].thumbUrl);
+      // console.log(fileList[0].thumbUrl);
       personal["image"] = fileList[0].thumbUrl;
     }
     personal["username"] = username || "";

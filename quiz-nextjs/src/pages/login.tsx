@@ -110,7 +110,10 @@ const Login: React.FC = () => {
       if (response) {
         if (remember) {
           setCookie("token", JSON.stringify(response.token), {
-            maxAge: 60 * 60 * 10,
+            maxAge: 60 * 60,
+          });
+          setCookie("refreshToken", JSON.stringify(response.token), {
+            maxAge: 60 * 60 * 24 * 7,
           });
           setCookie("username", JSON.stringify(response.username), {
             maxAge: 60 * 60 * 60 * 10,

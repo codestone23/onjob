@@ -29,7 +29,6 @@ const queryClient = new QueryClient({
 
 
 function App({ Component, pageProps }: AppProps) {
-  // const [queryClient] = React.useState(() => new QueryClient());
   const storeRef = useRef<AppStore>();
   if (!storeRef.current) {
     storeRef.current = makeStore();
