@@ -1,48 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Pagination, Drawer, Row, Col } from "antd";
-import Image from "next/image";
 import {
   Container,
   BodyStyles,
-  HeaderDashboard,
-  InputSearch,
-  HeaderItemLeft,
-  HeaderItemRight,
-  IconSearch,
-  SearchContain,
-  BodyDashboard,
-  ItemExam,
-  FooterDashboard,
-  DescriptionItem,
-  DescriptionItemSmall,
-  ListStar,
-  TitleExam,
   HeaderMobile,
   ImageTab,
   SiderPC,
-  ColStyles,
-  DifficultQuestion,
 } from "@/styles/dashboard";
-import SiderDashboard from "@/components/SiderDashboard";
 import tab from "@/assets/images/tab.jpg";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import { User, Question } from "@/data/contants";
-import { users } from "@/data/contants";
 import { getCurrentUser } from "@/pages/api/user/user.service";
-import SiderManager from "../components/SiderManager";
-import {
-  BodyManager,
-  ColUser,
-  HeaderRightManager,
-  ImageAdd,
-  RowItem,
-  TextCol,
-  TextFrontHeader,
-} from "@/styles/userManager";
-import addcolor from "../assets/images/addcolor.png";
-import change from "../assets/images/change.png";
-import trash from "../assets/images/trash.png";
+import SiderManager, { ItemComponent } from "../components/SiderManager";
+import { HeaderPCText, TextFrontHeader } from "@/styles/userManager";
+import UserTable from "@/components/UserTable";
+import ExamTable from "@/components/ExamTable";
 
 const UserManager: React.FC = () => {
   const [user, setUser] = useState<User | Object>({});
@@ -59,38 +32,19 @@ const UserManager: React.FC = () => {
     }
     fetchData();
   }, []);
-  const searchParams = useSearchParams();
-  const [open, setOpen] = useState(false);
-  const [listUser, setListUser] = useState<User[]>(users);
-  const [totalUser, setTotalUser] = useState<User[]>(users || []);
-  const page: string = searchParams.get("pageIndex") || "1";
-  const pageNumber: number = parseInt(page);
-  console.log(page);
-  const [pageIndex, setPageIndex] = useState<number>(parseInt(page));
-  const [pageSize, setPageSize] = useState(6);
-  const [textSearch, setTextSearch] = useState<string>(
-    searchParams.get("search-text") || ""
-  );
   const router = useRouter();
-  useEffect(() => {
-    if (searchParams.get("item") == "0" || !searchParams.get("item")) {
-      setTotalUser(
-        users.filter((e) => e.email.includes(searchParams.get("search") || ""))
-      );
-    }
-    setPageIndex(1);
-  }, [textSearch, searchParams]);
-
-  useEffect(() => {
-    const updatedListUser = totalUser.slice(
-      (pageNumber - 1) * pageSize,
-      pageNumber * pageSize
-    );
-    setListUser(updatedListUser);
-    console.log((pageNumber - 1) * pageSize + 1, pageNumber * pageSize);
-    console.log(updatedListUser);
-  }, [totalUser, pageNumber, searchParams]);
-
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const [open, setOpen] = useState(false);
+  const page: string = searchParams.get("pageIndex") || "1";
+  const [locationPage, setLocationPage] = useState<number>(0);
+  const handleChangeLocationPage = (num: number) => {
+    
+    setLocationPage(num);
+    router.push("/userManager", { scroll: false });
+    
+  };
+  console.log(page);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -98,6 +52,29 @@ const UserManager: React.FC = () => {
   const onClose = () => {
     setOpen(false);
   };
+  interface ComponentSider {
+    topic?: string;
+    value?: number;
+    component?: any;
+  }
+  const listComponents: ComponentSider[] = [
+    {
+      topic: "User Manager",
+      value: 0,
+      component: <UserTable />
+    },
+    {
+      topic: "Test Manager",
+      value: 1,
+      component: <ExamTable />
+    },
+    {
+      topic: "Test Quiz",
+      value: 2,
+      component: <UserTable />
+  
+    },
+  ];
 
   return (
     <>
@@ -116,7 +93,11 @@ const UserManager: React.FC = () => {
       </Drawer>
       <Container>
         <SiderPC>
-          <SiderManager user={user} />
+          <SiderManager
+            handleChangeLocationPage={handleChangeLocationPage}
+            locationPage={locationPage}
+            user={user}
+          />
         </SiderPC>
 
         <BodyStyles>
@@ -130,85 +111,18 @@ const UserManager: React.FC = () => {
             />
             User Manager
           </HeaderMobile>
-          <TextFrontHeader>Home &gt; User Manager</TextFrontHeader>
-          <HeaderDashboard>
-            <HeaderItemLeft>
-              <InputSearch
-                type="text"
-                name="search"
-                value={searchParams.get("search") || textSearch}
-                onChange={(e) => {
-                  setTextSearch(e.target.value);
-                  router.push(
-                    `/userManager?pageIndex=${1}&search=${e.target.value}`,
-                    { scroll: false }
-                  );
-                }}
-                alt="search"
-                placeholder="Search"
-              />
-              <SearchContain>
-                <IconSearch />
-              </SearchContain>
-            </HeaderItemLeft>
-            <HeaderRightManager>
-              <ImageAdd
-                src={addcolor}
-                width={30}
-                height={30}
-                alt="Clock"
-                // onClick={showDrawer}
-              />
-              New User
-            </HeaderRightManager>
-          </HeaderDashboard>
-          <TextFrontHeader>Tổng số tài khoản: 85</TextFrontHeader>
-          <BodyManager>
-            <RowItem gutter={16}>
-              {listUser.map((u, i) => {
-                return (
-                  <ColUser key={i}>
-                    <TextCol>
-                      <div>Username: {u.email}</div>
-                      <div>Name: {u.username}</div>
-                    </TextCol>
-                    <div>
-                      <ImageAdd
-                        src={change}
-                        width={30}
-                        height={30}
-                        alt="Clock"
-                        // onClick={showDrawer}
-                      />
-                      <ImageAdd
-                        src={trash}
-                        width={30}
-                        height={30}
-                        alt="Clock"
-                        // onClick={showDrawer}
-                      />
-                    </div>
-                  </ColUser>
-                );
-              })}
-            </RowItem>
-          </BodyManager>
-          <FooterDashboard>
-            <Pagination
-              current={parseInt(searchParams.get("pageIndex") || "1")}
-              pageSize={6}
-              pageSizeOptions={[6, 12, 20]}
-              total={totalUser.length}
-              defaultPageSize={6}
-              onChange={(index, size) => {
-                setPageIndex(index);
-                router.push(
-                  `/userManager?pageIndex=${index}&search=${textSearch}`,
-                  { scroll: false }
-                );
-              }}
-            />
-          </FooterDashboard>
+          <HeaderPCText>{listComponents[locationPage]?.topic}</HeaderPCText>
+          <TextFrontHeader>Home &gt; {listComponents[locationPage]?.topic}</TextFrontHeader>
+          {
+            listComponents.map((e,i) => {
+              if(locationPage === i){
+                return e.component;
+              }else{
+                return <></>
+              }
+            })
+          }
+          <UserTable />
         </BodyStyles>
         <ToastContainer />
       </Container>

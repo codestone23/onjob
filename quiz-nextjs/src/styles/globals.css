@@ -147,6 +147,10 @@ a {
   background-color: #66ff66;
 }
 
+.active-page{
+  color: #29853a;
+}
+
 @media (max-width: 600px) {
   .container .ant-form-item {
     width: 100%;

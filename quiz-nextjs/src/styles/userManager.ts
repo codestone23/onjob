@@ -11,9 +11,10 @@ export const TextManager = styled.div`
   font-size: 1rem;
   font-weight: 600;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin-top: 1rem;
+  padding: 0 2rem;
 `;
 
 export const TextFrontHeader = styled.div`
@@ -24,7 +25,7 @@ export const TextFrontHeader = styled.div`
     text-align: left;
     width: 95%;
     margin: auto;
-    margin-top: 2rem;
+    margin-top: 1rem;
 
 
 `;
@@ -83,13 +84,24 @@ export const ColUser = styled(Col)`
 `;
 
 export const RowItem = styled(Row)`
-
-
 `;
 
 export const TextCol = styled.div`
     padding-left: 2rem ;
-    
+`;
 
+export const HeaderPCText = styled.div`
+    font-size: 2rem;
+    width: 95%;
+    margin: auto;
+    margin-top: 1rem;
+    font-weight: 600;
 
+`;
+
+export const FooterUserManager = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0rem;
 `;
