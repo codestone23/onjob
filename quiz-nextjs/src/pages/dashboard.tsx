@@ -59,20 +59,7 @@ const Dashboard: React.FC = () => {
   const { t, i18n } = useTranslation("common");
   console.log(user);
   const [pending, setPending] = useState<boolean>(true);
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const data: UserLogin | undefined = await getCurrentUser();
-  //       console.log(data);
-  //       // dispatch(setUserLogin(data));
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //     } finally {
-  //       setPending(false);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
